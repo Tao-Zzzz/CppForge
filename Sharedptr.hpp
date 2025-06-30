@@ -1,4 +1,4 @@
-
+#pragma once
 
 
 namespace forge{
@@ -29,6 +29,10 @@ namespace forge{
 
         SharedPtr& operator=(const SharedPtr& other) {
             if (this != &other) {
+                if (count && --(*count) == 0) {
+                    delete ptr;
+                    delete count;
+                }
                 ptr = other.ptr;
                 count = other.count;
                 if (count)
@@ -38,6 +42,10 @@ namespace forge{
         }
         SharedPtr& operator=(SharedPtr&& other) {
             if (this != &other) {
+                if (count && --(*count) == 0) {
+                    delete ptr;
+                    delete count;
+                }
                 ptr = other.ptr;
                 count = other.count;
                 other.ptr = nullptr;
@@ -47,7 +55,7 @@ namespace forge{
         }
 
         T& operator*() const { return *ptr; }
-        T* operator->() { return ptr; }
+        T* operator->() const { return ptr; }
 
         T* get() const { return ptr; }
         size_t use_count() { return count ? *count : 0; }

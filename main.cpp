@@ -1,6 +1,6 @@
 #include <iostream>
 #include "SharedPtr.hpp" // 假设你的 SharedPtr 在此头文件
-
+#include "UniquePtr.hpp"
 
 void testSharedPtr() {
     // 测试 1: 基本构造和析构
@@ -54,7 +54,41 @@ void testSharedPtr() {
     }
 }
 
+void testUniqueAndWeakPtr() {
+    // 测试 UniquePtr
+    {
+        forge::UniquePtr<int> up1(new int(10));
+        std::cout << "UniquePtr Test 1: *up1 = " << *up1 << ", get = " << up1.get() << "\n"; // 应输出 10, 非空地址
+
+        forge::UniquePtr<int> up2 = std::move(up1);
+        std::cout << "UniquePtr Test 2: *up2 = " << *up2 << ", up1.get() = " << up1.get() << "\n"; // 应输出 10, nullptr
+
+        up2.reset(new int(20));
+        std::cout << "UniquePtr Test 3: *up2 = " << *up2 << "\n"; // 应输出 20
+
+        int* raw = up2.release();
+        std::cout << "UniquePtr Test 4: raw = " << *raw << ", up2.get() = " << up2.get() << "\n"; // 应输出 20, nullptr
+        delete raw;
+    }
+
+    // 测试 WeakPtr
+    {
+        forge::SharedPtr<int> sp1(new int(30));
+        forge::WeakPtr<int> wp1(sp1);
+        std::cout << "WeakPtr Test 1: wp1.expired() = " << wp1.expired() << ", sp1.use_count() = " << sp1.use_count() << "\n"; // 应输出 false, 1
+
+        forge::SharedPtr<int> sp2 = wp1.lock();
+        std::cout << "WeakPtr Test 2: *sp2 = " << *sp2 << ", sp1.use_count() = " << sp1.use_count() << "\n"; // 应输出 30, 2
+
+        sp1.reset();
+        std::cout << "WeakPtr Test 3: wp1.expired() = " << wp1.expired() << "\n"; // 应输出 true
+
+        forge::SharedPtr<int> sp3 = wp1.lock();
+        std::cout << "WeakPtr Test 4: sp3.get() = " << sp3.get() << "\n"; // 应输出 nullptr
+    }
+}
 int main() {
+    testUniqueAndWeakPtr();
     testSharedPtr();
     return 0;
 }
