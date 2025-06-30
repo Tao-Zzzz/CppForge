@@ -80,7 +80,7 @@ namespace forge{
 
         T* get() const { return ptr; }
         size_t use_count() const {
-            std::cout << "use_count: control = " << control << "\n";
+            //std::cout << "use_count: control = " << control << "\n";
             return control ? control->use_count : 0;
         }
 
@@ -97,7 +97,7 @@ namespace forge{
             }
             ptr = nullptr;
             control = nullptr;
-            std::cout << "reset: control = " << control << "\n";
+            //std::cout << "reset: control = " << control << "\n";
         }
     };
 }

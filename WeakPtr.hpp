@@ -52,7 +52,7 @@ namespace forge {
         }
 
         bool expired() const {
-            std::cout << "expired: control = " << control << ", use_count = " << (control ? control->use_count : 0) << "\n";
+            //std::cout << "expired: control = " << control << ", use_count = " << (control ? control->use_count : 0) << "\n";
             return !control || control->use_count == 0;
         }
 
