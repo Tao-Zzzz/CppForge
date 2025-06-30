@@ -15,10 +15,10 @@ namespace forge {
 		UniquePtr(const UniquePtr& other) = delete;
 		UniquePtr& operator=(const UniquePtr& other) = delete;
 
-		UniquePtr(UniquePtr&& other) : ptr(other.ptr) {
+		UniquePtr(UniquePtr&& other)noexcept : ptr(other.ptr) {
 			other.ptr = nullptr;
 		}
-		UniquePtr& operator=(UniquePtr&& other) {
+		UniquePtr& operator=(UniquePtr&& other) noexcept {
 			if (this != &other) {
 				delete ptr;
 				ptr = other.ptr;
@@ -27,17 +27,17 @@ namespace forge {
 			return *this;
 		}
 
-		T* operator*() const { return *ptr; }
-		T& operator->() const { return ptr; }
+		T& operator*() const { return *ptr; }
+		T* operator->() const { return ptr; }
 
-		T* get() const { return *ptr; }
+		T* get() const { return ptr; }
 		void reset(T* new_ptr = nullptr) {
 			delete ptr;
 			ptr = new_ptr;
 		}
 		T* release() {
 			T* tmp = ptr;
-			delete(ptr);
+			ptr = nullptr;
 			return tmp;
 		}
 	};

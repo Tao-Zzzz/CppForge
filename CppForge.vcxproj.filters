@@ -23,5 +23,11 @@
     <ClInclude Include="Sharedptr.hpp">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="UniquePtr.hpp">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="WeakPtr.hpp">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

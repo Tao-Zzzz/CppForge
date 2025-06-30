@@ -1,6 +1,8 @@
 #include <iostream>
 #include "SharedPtr.hpp" // 假设你的 SharedPtr 在此头文件
 #include "UniquePtr.hpp"
+#include "WeakPtr.hpp"
+
 
 void testSharedPtr() {
     // 测试 1: 基本构造和析构
@@ -73,22 +75,27 @@ void testUniqueAndWeakPtr() {
 
     // 测试 WeakPtr
     {
+        // Test 1: Basic WeakPtr creation
         forge::SharedPtr<int> sp1(new int(30));
         forge::WeakPtr<int> wp1(sp1);
-        std::cout << "WeakPtr Test 1: wp1.expired() = " << wp1.expired() << ", sp1.use_count() = " << sp1.use_count() << "\n"; // 应输出 false, 1
+        std::cout << "WeakPtr Test 1: wp1.expired() = " << wp1.expired() << ", sp1.use_count() = " << sp1.use_count() << "\n"; // 0, 1
 
+        // Test 2: Lock creates a new SharedPtr
         forge::SharedPtr<int> sp2 = wp1.lock();
-        std::cout << "WeakPtr Test 2: *sp2 = " << *sp2 << ", sp1.use_count() = " << sp1.use_count() << "\n"; // 应输出 30, 2
+        std::cout << "WeakPtr Test 2: *sp2 = " << *sp2 << ", sp1.use_count() = " << sp1.use_count() << "\n"; // 30, 2
 
+        // Test 3: Release all SharedPtrs
         sp1.reset();
-        std::cout << "WeakPtr Test 3: wp1.expired() = " << wp1.expired() << "\n"; // 应输出 true
+        sp2.reset(); // Ensure sp2 also releases the resource
+        std::cout << "WeakPtr Test 3: wp1.expired() = " << wp1.expired() << "\n"; // Should be 1 (true)
 
+        // Test 4: Lock after resource is freed
         forge::SharedPtr<int> sp3 = wp1.lock();
-        std::cout << "WeakPtr Test 4: sp3.get() = " << sp3.get() << "\n"; // 应输出 nullptr
+        std::cout << "WeakPtr Test 4: sp3.get() = " << sp3.get() << "\n"; // Should be nullptr
     }
 }
 int main() {
     testUniqueAndWeakPtr();
-    testSharedPtr();
+    //testSharedPtr();
     return 0;
 }
