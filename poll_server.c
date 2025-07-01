@@ -31,7 +31,9 @@ int main(){
     // pollfd 传入时配置fd和感兴趣的事件
     // 返回时会修改revents, real 真正发生的事件
     while(1){
-        poll(fds, nfds, -1);// -1, 永久阻塞, 直到有一个文件描述符准备就绪
+        // 检查阵列前nfds个元素
+        // -1, 永久阻塞, 直到有一个文件描述符准备就绪
+        poll(fds, nfds, -1);
 
         // 是否有事件发生, 是可读事件
         if(fds[0].revents & POLLIN){
