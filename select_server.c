@@ -39,6 +39,7 @@ int main(){
             }
         }
 
+        // 阻塞然后遍历, 写事件, 异常事件, 超时时间
         select(max_fd + 1, &read_fds, NULL, NULL, NULL);
 
         if(FD_ISSET(server_fd, &read_fds)){
