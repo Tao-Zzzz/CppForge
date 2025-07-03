@@ -32,4 +32,17 @@ private:
     }
 };
 
-int  
+int main(){
+    MyClass obj1(10);
+
+    obj1.setValue(20).setValue(30);
+    obj1.callSelf();
+
+    obj1.printAddress();
+
+    MyClass obj2(40);
+    std::cout << "是否是同一对象: " << obj1.isSameObject(obj2) << std::endl;
+
+    obj1.callSelf();
+    return 0;
+}
