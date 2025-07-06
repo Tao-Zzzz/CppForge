@@ -6,6 +6,7 @@
 #include <mutex>
 #include <condition_variable>
 #include <atomic>
+#include <future>
 
 class ThreadPool{
 public:
@@ -44,6 +45,26 @@ public:
         }
     }
 
+    template<typename F,typename... Args>
+    auto submit(F&& f, Args&&... args) 
+        -> std::future<typename std::invoke_result_t<F, Args...>>{
+            using return_type = typename std::invoke_result_t<F, Args...>;
+
+            auto task_ptr = std::make_shared<std::packaged_task<return_type()>>(
+                std::bind(std::forward<F>(f), std::forward<Args>(args)...)
+            );
+
+            {
+                std::unique_lock<std::mutex> lock(mtx);
+                tasks.emplace([task_ptr](){
+                    (*task_ptr)();
+                });
+            }
+
+            cv.notify_one();
+            return task_ptr->get_future();
+        }
+
     ~ThreadPool(){
         {
             std::unique_lock<std::mutex> lock(mtx);
@@ -70,12 +91,25 @@ private:
 int main(){
     ThreadPool pool(4);
     
-    for(int i = 0; i < 10; ++i){
+    for(int i = 0; i < 2; ++i){
         pool.enqueue([i](){
             std::cout << "Task " << i << " is running in thread" << std::this_thread::get_id() << std::endl;
 
         });
     }
+
+    auto future1 = pool.submit([](int a, int b){
+        return a + b;
+    }, 3, 4);
+
+    auto future2 = pool.submit([](){
+        std::cout << "Hello from task!" << std::endl;
+        return 42;
+    });
+
+
+    std::cout << "Result1: " << future1.get() << std::endl;
+    std::cout << "Result2: " << future2.get() << std::endl;
 
     std::this_thread::sleep_for(std::chrono::seconds(1));
     return 0;
