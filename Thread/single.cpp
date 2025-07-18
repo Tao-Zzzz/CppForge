@@ -2,7 +2,7 @@
 #include <iostream>
 #include <memory>
 
-// 局部静态变量, 不是成员变量, 返回的是引用
+// 局部静态变量, 不是成员变量, 返回的是引用, 构造函数都是私有化的,不让其他人调用
 class Single2
 {
 private:
@@ -177,7 +177,7 @@ private:
     static std::mutex s_mutex;
 };
 
-
+ 
 class SingletonOnce
 {
 private:
@@ -207,4 +207,36 @@ public:
     }
 };
 
+// 静态变量在类外面定义
 std::shared_ptr<SingletonOnce> SingletonOnce::_instance = nullptr;
+
+
+// 为了让单例更加通用，可以做成模板类
+template <typename T>
+class Singleton
+{
+protected:
+    Singleton() = default;
+    Singleton(const Singleton<T> &) = delete;
+    Singleton &operator=(const Singleton<T> &st) = delete;
+    static std::shared_ptr<T> _instance;
+
+public:
+    static std::shared_ptr<T> GetInstance()
+    {
+        static std::once_flag s_flag;
+        std::call_once(s_flag, [&]()
+                       { _instance = std::shared_ptr<T>(new T); });
+        return _instance;
+    }
+    void PrintAddress()
+    {
+        std::cout << _instance.get() << std::endl;
+    }
+    ~Singleton()
+    {
+        std::cout << "this is singleton destruct" << std::endl;
+    }
+};
+template <typename T>
+std::shared_ptr<T> Singleton<T>::_instance = nullptr;
