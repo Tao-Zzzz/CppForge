@@ -24,6 +24,7 @@ void threadFunction(std::shared_future<int> future)
 void use_shared_future()
 {
     std::promise<int> promise;
+    // promise得到的future对象, 用shared_future获取
     std::shared_future<int> future = promise.get_future();
 
     std::thread myThread1(myFunction, std::move(promise)); // 将 promise 移动到线程中
