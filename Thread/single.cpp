@@ -1,6 +1,7 @@
 #include <mutex>
 #include <iostream>
 #include <memory>
+#include <atomic>
 
 // 局部静态变量, 不是成员变量, 返回的是引用, 构造函数都是私有化的,不让其他人调用
 class Single2
@@ -177,7 +178,53 @@ private:
     static std::mutex s_mutex;
 };
 
- 
+// 利用智能指针解决释放问题
+class SingleMemoryModel
+{
+private:
+    SingleMemoryModel()
+    {
+    }
+    SingleMemoryModel(const SingleMemoryModel &) = delete;
+    SingleMemoryModel &operator=(const SingleMemoryModel &) = delete;
+
+public:
+    ~SingleMemoryModel()
+    {
+        std::cout << "single auto delete success " << std::endl;
+    }
+    static std::shared_ptr<SingleMemoryModel> GetInst()
+    {
+        // 1 处
+        if (_b_init.load(std::memory_order_acquire))
+        {
+            return single;
+        }
+        // 2 处
+        s_mutex.lock();
+        // 3 处
+        if (_b_init.load(std::memory_order_relaxed))
+        {
+            s_mutex.unlock();
+            return single;
+        }
+        // 4处
+        single = std::shared_ptr<SingleMemoryModel>(new SingleMemoryModel);
+        _b_init.store(true, std::memory_order_release);
+        s_mutex.unlock();
+        return single;
+    }
+
+private:
+    static std::shared_ptr<SingleMemoryModel> single;
+    static std::mutex s_mutex;
+    static std::atomic<bool> _b_init;
+};
+
+std::shared_ptr<SingleMemoryModel> SingleMemoryModel::single = nullptr;
+std::mutex SingleMemoryModel::s_mutex;
+std::atomic<bool> SingleMemoryModel::_b_init = false;
+
 class SingletonOnce
 {
 private:
