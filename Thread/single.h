@@ -1,3 +1,4 @@
+#pragma
 #include <mutex>
 #include <iostream>
 #include <memory>
