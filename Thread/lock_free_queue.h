@@ -9,9 +9,9 @@ class lock_free_queue
 private:
     struct node_counter
     {
-        unsigned internal_count : 30;
+        unsigned internal_count : 30; //内部引用计数
         // ⇽--- 2
-        unsigned external_counters : 2;
+        unsigned external_counters : 2; //外部引用计数
     };
 
     struct node;
