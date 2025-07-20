@@ -18,6 +18,7 @@ class threadsafe_list
         }
     };
 
+    // head默认初始化了, 都是nullptr
     node head;
 
 public:
