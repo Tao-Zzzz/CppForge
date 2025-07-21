@@ -1,3 +1,4 @@
+#pragma once
 #include <thread>
 #include <list>
 #include "thread_safe_stack.h"
