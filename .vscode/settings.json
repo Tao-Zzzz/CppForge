@@ -64,6 +64,8 @@
         "future": "cpp",
         "list": "cpp",
         "map": "cpp",
-        "shared_mutex": "cpp"
+        "shared_mutex": "cpp",
+        "threadsafe_queue": "cpp",
+        "text_encoding": "cpp"
     }
 }

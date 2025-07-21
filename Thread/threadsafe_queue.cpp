@@ -7,7 +7,7 @@
 #include <thread>
 
 template <typename T>
-class threadsafe_queue
+class threadsafe_queue_simple
 {
 private:
     mutable std::mutex mut;
@@ -15,11 +15,11 @@ private:
     std::condition_variable data_cond;
 
 public:
-    threadsafe_queue()
+    threadsafe_queue_simple()
     {
     }
     // 用的是其他队列的互斥量
-    threadsafe_queue(threadsafe_queue const &other)
+    threadsafe_queue_simple(threadsafe_queue_simple const &other)
     {
         std::lock_guard<std::mutex> lk(other.mut);
         data_queue = other.data_queue;
@@ -79,7 +79,7 @@ public:
 
 void test_safe_que()
 {
-    threadsafe_queue<int> safe_que;
+    threadsafe_queue_simple<int> safe_que;
     std::mutex mtx_print;
     std::thread producer(
         [&]()
