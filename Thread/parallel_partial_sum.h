@@ -16,7 +16,7 @@ void parallel_partial_sum(Iterator first, Iterator last)
             {
                 Iterator end = last;
                 ++end;
-                std::partial_sum(begin, end, begin); // ⇽-- - 2
+                std::partial_sum(begin, end, begin); // ⇽-- - 2 结果存放的起始在begin,也就是覆盖计算
                 if (previous_end_value)              // ⇽-- - 3
                 {
                     value_type addend = previous_end_value->get(); // ⇽-- - 4
