@@ -66,6 +66,14 @@
         "map": "cpp",
         "shared_mutex": "cpp",
         "threadsafe_queue": "cpp",
-        "text_encoding": "cpp"
+        "text_encoding": "cpp",
+        "any": "cpp",
+        "codecvt": "cpp",
+        "complex": "cpp",
+        "coroutine": "cpp",
+        "csignal": "cpp",
+        "source_location": "cpp",
+        "cinttypes": "cpp",
+        "typeindex": "cpp"
     }
 }
