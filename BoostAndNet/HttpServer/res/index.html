@@ -1,0 +1,3400 @@
+
+<!DOCTYPE HTML>
+<html lang="" >
+    <head>
+        <meta charset="UTF-8">
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <title>vscode配置C++以及boost库开发环境 · 恋恋风辰的编程笔记</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="description" content="">
+        <meta name="generator" content="GitBook 3.2.3">
+        <meta name="author" content="恋恋风辰">
+        <meta name="identifier" content="图书编号" scheme="ISBN">
+        
+    
+    <link rel="stylesheet" href="../../../gitbook/style.css">
+
+    
+            
+                
+                <link rel="stylesheet" href="../../../gitbook/gitbook-plugin-search-pro/search.css">
+                
+            
+                
+                <link rel="stylesheet" href="../../../gitbook/gitbook-plugin-code/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="../../../gitbook/gitbook-plugin-expandable-chapters/expandable-chapters.css">
+                
+            
+                
+                <link rel="stylesheet" href="../../../gitbook/gitbook-plugin-back-to-top-button/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="../../../gitbook/gitbook-plugin-lightbox/css/lightbox.min.css">
+                
+            
+                
+                <link rel="stylesheet" href="../../../gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+                
+                <link rel="stylesheet" href="../../../gitbook/gitbook-plugin-fontsettings/website.css">
+                
+            
+                
+                <link rel="stylesheet" href="../../../gitbook/gitbook-plugin-theme-lou/lou.css">
+                
+            
+        
+
+    
+
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+        
+    
+    
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="../../../gitbook/images/apple-touch-icon-precomposed-152.png">
+    <link rel="shortcut icon" href="../../../gitbook/images/favicon.ico" type="image/x-icon">
+
+    
+    
+
+    </head>
+    <body>
+         
+<div class="donate-modal modal">
+  <div class="modal-header">
+    <div>
+      <span>
+        <img
+          id="modal-avatar"
+          class="modal-avatar"
+          src="/static/head.jpg"
+        />
+      </span>
+      <span id="nickname"> 恋恋风辰 </span>
+      <p class="modal-close close" onclick="closeDonateModal()">×</p>
+    </div>
+    <div class="message">
+      <div class="tip">
+        <i></i>
+        <span>随意打赏，但不要超过一顿早餐钱！</span>
+      </div>
+    </div>
+  </div>
+  <div class="modal-content">
+    <div class="modal-pay-way">
+      <div id="wxpay" onclick="showDonateImg(0)">
+        <input
+          type="radio"
+          name="pay-way"
+          value="wxpay"
+          class="zs-type"
+          checked="checked"
+        />
+        <span>
+          <img
+            id="wxpay-logo"
+            src="data:image/png;base64,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"
+          />
+        </span>
+      </div>
+      <div id="alipay" onclick="showDonateImg(1)">
+        <input type="radio" name="pay-way" value="alipay" class="zs-type" />
+        <span>
+          <img
+            id="alipay-logo"
+            src="data:image/png;base64,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"
+          />
+        </span>
+      </div>
+    </div>
+    <div class="modal-pay-qrcode">
+      <img id="wxpay-code" src="/static/wechatmoney.jpg" />
+      <img
+        id="alipay-code"
+        src="/static/zfbmoney.jpg"
+        hidden
+      />
+    </div>
+  </div>
+</div>
+<div class="mask"></div>
+
+
+<div class="book">
+  <div class="header-inner">
+    <!-- LOGO -->
+    <div class="logo"></div>
+    <span class="title"></span>
+
+    <!-- Search -->
+    
+<div id="book-search-input" role="search">
+    <input type="text" placeholder="Type to search" />
+</div>
+
+
+    <!-- Nav -->
+    <ul class="header-nav">
+      <li>
+        <a href="https://llfc.club" target="_blank">官方博客地址</a>
+      </li><li>
+        <a href="https://space.bilibili.com/271469206" target="_blank">B站</a>
+      </li>
+    </ul>
+  </div>
+
+  <div class="book-summary">
+    <div class="book-summary-title">文档目录</div>
+     
+    <nav role="navigation">
+
+
+<ul class="summary">
+    
+    
+
+    
+
+    
+        
+        
+    
+        <li class="chapter " data-level="1.1" data-path="../../../">
+            
+                <a href="../../../">
+            
+                    
+                    简介
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2" >
+            
+                <span>
+            
+                    
+                    [C++]
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.2.1" >
+            
+                <span>
+            
+                    
+                    [C++环境搭建]
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.2.1.1" data-path="../section1/cpp02.html">
+            
+                <a href="../section1/cpp02.html">
+            
+                    
+                    搭建vscode开发环境
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.2" >
+            
+                <span>
+            
+                    
+                    [C++基础语法]
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.2.2.1" data-path="../section2/cpp03.html">
+            
+                <a href="../section2/cpp03.html">
+            
+                    
+                    输入输出流和变量
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.2.2" data-path="../section2/cpp04.html">
+            
+                <a href="../section2/cpp04.html">
+            
+                    
+                    string类
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.2.3" data-path="../section2/cpp05.html">
+            
+                <a href="../section2/cpp05.html">
+            
+                    
+                    vector类
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.2.4" data-path="../section2/cpp06.html">
+            
+                <a href="../section2/cpp06.html">
+            
+                    
+                    迭代器
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.2.5" data-path="../section2/cpp07.html">
+            
+                <a href="../section2/cpp07.html">
+            
+                    
+                    数组
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.2.6" data-path="../section2/cpp08.html">
+            
+                <a href="../section2/cpp08.html">
+            
+                    
+                    多维数组
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.2.7" data-path="../section2/cpp09.html">
+            
+                <a href="../section2/cpp09.html">
+            
+                    
+                    函数
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.3" >
+            
+                <span>
+            
+                    
+                    [C++类的认识]
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.2.3.1" data-path="../section3/cpp10.html">
+            
+                <a href="../section3/cpp10.html">
+            
+                    
+                    类和对象
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.3.2" data-path="../section3/cpp11.html">
+            
+                <a href="../section3/cpp11.html">
+            
+                    
+                    类的访问控制
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.3.3" data-path="../section3/cpp12.html">
+            
+                <a href="../section3/cpp12.html">
+            
+                    
+                    类的作用域
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.3.4" data-path="../section3/cpp13.html">
+            
+                <a href="../section3/cpp13.html">
+            
+                    
+                    类的构造函数
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.3.5" data-path="../section3/cpp14.html">
+            
+                <a href="../section3/cpp14.html">
+            
+                    
+                    类的静态成员
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.3.6" data-path="../section3/cpp15.html">
+            
+                <a href="../section3/cpp15.html">
+            
+                    
+                    IO流
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.3.7" data-path="../section3/cpp16.html">
+            
+                <a href="../section3/cpp16.html">
+            
+                    
+                    容器类
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.3.8" data-path="../section3/cpp20.html">
+            
+                <a href="../section3/cpp20.html">
+            
+                    
+                    关联容器
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.3.9" data-path="../section3/cpp25.html">
+            
+                <a href="../section3/cpp25.html">
+            
+                    
+                    拷贝构造和单例模式
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.3.10" data-path="../section3/cpp26.html">
+            
+                <a href="../section3/cpp26.html">
+            
+                    
+                    拷贝控制和资源管理
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.3.11" data-path="../section3/cpp27.html">
+            
+                <a href="../section3/cpp27.html">
+            
+                    
+                    类的swap操作
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.3.12" data-path="../section3/cpp28.html">
+            
+                <a href="../section3/cpp28.html">
+            
+                    
+                    类的拷贝控制案例
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.3.13" data-path="../section3/cpp30.html">
+            
+                <a href="../section3/cpp30.html">
+            
+                    
+                    右值引用与移动构造函数
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.3.14" data-path="../section3/cpp33.html">
+            
+                <a href="../section3/cpp33.html">
+            
+                    
+                    运算符重载
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.3.15" data-path="../section3/cpp35.html">
+            
+                <a href="../section3/cpp35.html">
+            
+                    
+                    封装继承和多态
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.3.16" data-path="../section3/cpp36.html">
+            
+                <a href="../section3/cpp36.html">
+            
+                    
+                    类模板和函数模板
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.3.17" data-path="../section3/cpp41.html">
+            
+                <a href="../section3/cpp41.html">
+            
+                    
+                    重写重载和覆盖的区别
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.3.18" data-path="../section3/cpp42.html">
+            
+                <a href="../section3/cpp42.html">
+            
+                    
+                    虚函数表原理
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.3.19" data-path="../section3/cpp31.html">
+            
+                <a href="../section3/cpp31.html">
+            
+                    
+                    继承面试题
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.4" >
+            
+                <span>
+            
+                    
+                    [C++泛型用法]
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.2.4.1" data-path="../section4/cpp17.html">
+            
+                <a href="../section4/cpp17.html">
+            
+                    
+                    泛型算法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.4.2" data-path="../section4/cpp18.html">
+            
+                <a href="../section4/cpp18.html">
+            
+                    
+                    泛型定制
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.4.3" data-path="../section4/cpp19.html">
+            
+                <a href="../section4/cpp19.html">
+            
+                    
+                    迭代器分类
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.5" >
+            
+                <span>
+            
+                    
+                    [C++智能指针]
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.2.5.1" data-path="../section5/cpp21.html">
+            
+                <a href="../section5/cpp21.html">
+            
+                    
+                    shared_ptr
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.5.2" data-path="../section5/cpp22.html">
+            
+                <a href="../section5/cpp22.html">
+            
+                    
+                    unique_ptr和weak_ptr
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.5.3" data-path="../section5/cpp23.html">
+            
+                <a href="../section5/cpp23.html">
+            
+                    
+                    动态数组
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.5.4" data-path="../section5/cpp32.html">
+            
+                <a href="../section5/cpp32.html">
+            
+                    
+                    再谈单例模式
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.6" >
+            
+                <span>
+            
+                    
+                    [C++内存管理]
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.2.6.1" data-path="../section6/cpp29.html">
+            
+                <a href="../section6/cpp29.html">
+            
+                    
+                    动态内存管理示例
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.7" >
+            
+                <span>
+            
+                    
+                    [C11新特性]
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.2.7.1" data-path="../section7/cpp34.html">
+            
+                <a href="../section7/cpp34.html">
+            
+                    
+                    动态内存管理示例
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.8" >
+            
+                <span>
+            
+                    
+                    [C++模板]
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.2.8.1" data-path="../section8/cpp37.html">
+            
+                <a href="../section8/cpp37.html">
+            
+                    
+                    模板类的友元和折叠规则
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.8.2" data-path="../section8/cpp38.html">
+            
+                <a href="../section8/cpp38.html">
+            
+                    
+                    forward原样转发
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.8.3" data-path="../section8/cpp39.html">
+            
+                <a href="../section8/cpp39.html">
+            
+                    
+                    模拟实现vector
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.8.4" data-path="../section8/cpp40.html">
+            
+                <a href="../section8/cpp40.html">
+            
+                    
+                    模板特例化
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.9" >
+            
+                <span>
+            
+                    
+                    [Qt界面编程]
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.2.9.1" data-path="../section9/qt01.html">
+            
+                <a href="../section9/qt01.html">
+            
+                    
+                    环境搭建
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.9.2" data-path="../section9/qt02.html">
+            
+                <a href="../section9/qt02.html">
+            
+                    
+                    创建项目和编译
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.9.3" data-path="../section9/qt03.html">
+            
+                <a href="../section9/qt03.html">
+            
+                    
+                    对话框
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.9.4" data-path="../section9/qt04.html">
+            
+                <a href="../section9/qt04.html">
+            
+                    
+                    信号和槽
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.9.5" data-path="../section9/qt05.html">
+            
+                <a href="../section9/qt05.html">
+            
+                    
+                    模态对话框切换
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.9.6" data-path="../section9/qt06.html">
+            
+                <a href="../section9/qt06.html">
+            
+                    
+                    几种封装好的对话框
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.9.7" data-path="../section9/qt07.html">
+            
+                <a href="../section9/qt07.html">
+            
+                    
+                    QT QLineEdit介绍
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.9.8" data-path="../section9/qt08.html">
+            
+                <a href="../section9/qt08.html">
+            
+                    
+                    QT 布局
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.9.9" data-path="../section9/qt09.html">
+            
+                <a href="../section9/qt09.html">
+            
+                    
+                    QT 主窗口
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.9.10" data-path="../section9/qt10.html">
+            
+                <a href="../section9/qt10.html">
+            
+                    
+                    Qt QTextEdit知识
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.9.11" data-path="../section9/qt11.html">
+            
+                <a href="../section9/qt11.html">
+            
+                    
+                    Qt 文本高亮
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.9.12" data-path="../section9/qt12.html">
+            
+                <a href="../section9/qt12.html">
+            
+                    
+                    Qt 拖拽事件
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.9.13" data-path="../section9/qt13.html">
+            
+                <a href="../section9/qt13.html">
+            
+                    
+                    QT 事件系统
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.9.14" data-path="../section9/qt14.html">
+            
+                <a href="../section9/qt14.html">
+            
+                    
+                    Qt 按键事件
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.9.15" data-path="../section9/qt15.html">
+            
+                <a href="../section9/qt15.html">
+            
+                    
+                    Qt 鼠标事件
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.9.16" data-path="../section9/qt16.html">
+            
+                <a href="../section9/qt16.html">
+            
+                    
+                    Qt 定时器事件
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.9.17" data-path="../section9/qt17.html">
+            
+                <a href="../section9/qt17.html">
+            
+                    
+                    Qt MVC结构之Model模型介绍
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.9.18" data-path="../section9/qt18.html">
+            
+                <a href="../section9/qt18.html">
+            
+                    
+                    Qt MVC结构之QItemSelectionModel模型介绍
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.9.19" data-path="../section9/qt19.html">
+            
+                <a href="../section9/qt19.html">
+            
+                    
+                    Qt MVC结构之QItemDelegate介绍
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.9.20" data-path="../section9/qt20.html">
+            
+                <a href="../section9/qt20.html">
+            
+                    
+                    Qt 项目视图便捷类
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.9.21" data-path="../section9/qt21.html">
+            
+                <a href="../section9/qt21.html">
+            
+                    
+                    Qt 自定义模型的拖动实现
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.9.22" data-path="../section9/qt22.html">
+            
+                <a href="../section9/qt22.html">
+            
+                    
+                    Qt 实现电子相册(一)--目录树和向导
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.9.23" data-path="../section9/qt23.html">
+            
+                <a href="../section9/qt23.html">
+            
+                    
+                    QT 实现电子相册(二)--双击展示图片与切换
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.9.24" data-path="../section9/qt24.html">
+            
+                <a href="../section9/qt24.html">
+            
+                    
+                    QT 实现电子相册(三)--导入功能和幻灯片ui设计
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.9.25" data-path="../section9/qt25.html">
+            
+                <a href="../section9/qt25.html">
+            
+                    
+                    QT 实现电子相册(四)--实现播放动画
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.9.26" data-path="../section9/qt26.html">
+            
+                <a href="../section9/qt26.html">
+            
+                    
+                    QT 实现电子相册(五)--实现幻灯片的暂停和切换
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.10" >
+            
+                <span>
+            
+                    
+                    [Boost和网络]
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter active" data-level="1.2.10.1" data-path="asio01.html">
+            
+                <a href="asio01.html">
+            
+                    
+                    vscode配置C++以及boost库开发环境
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3" >
+            
+                <span>
+            
+                    
+                    [golang]
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.3.1" >
+            
+                <span>
+            
+                    
+                    [环境搭建]
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.3.1.1" data-path="../../go/env/golang01.html">
+            
+                <a href="../../go/env/golang01.html">
+            
+                    
+                    linux环境搭建和编码
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.1.2" data-path="../../go/env/golang02.html">
+            
+                <a href="../../go/env/golang02.html">
+            
+                    
+                    windows环境搭建和vscode配置
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.2" >
+            
+                <span>
+            
+                    
+                    [基础]
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.3.2.1" data-path="../../go/base/golang03.html">
+            
+                <a href="../../go/base/golang03.html">
+            
+                    
+                    基本变量和demo
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.2.2" data-path="../../go/base/golang04.html">
+            
+                <a href="../../go/base/golang04.html">
+            
+                    
+                    Cobra命令行参数库的使用
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.2.3" data-path="../../go/base/golang05.html">
+            
+                <a href="../../go/base/golang05.html">
+            
+                    
+                    slice知识介绍和使用
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.2.4" data-path="../../go/base/golang06.html">
+            
+                <a href="../../go/base/golang06.html">
+            
+                    
+                    map介绍
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.3" >
+            
+                <span>
+            
+                    
+                    [进阶]
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.3.3.1" data-path="../../go/super/golang07.html">
+            
+                <a href="../../go/super/golang07.html">
+            
+                    
+                    实现四种排序(快速，冒泡，插入，选择)
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.3.2" data-path="../../go/super/golang08.html">
+            
+                <a href="../../go/super/golang08.html">
+            
+                    
+                    实现堆排序
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.3.3" data-path="../../go/super/golang09.html">
+            
+                <a href="../../go/super/golang09.html">
+            
+                    
+                    解密定时器的实现细节
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.3.4" data-path="../../go/super/golang10.html">
+            
+                <a href="../../go/super/golang10.html">
+            
+                    
+                    使用etcd
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.3.5" data-path="../../go/super/golang11.html">
+            
+                <a href="../../go/super/golang11.html">
+            
+                    
+                    函数介绍
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.3.6" data-path="../../go/super/golang12.html">
+            
+                <a href="../../go/super/golang12.html">
+            
+                    
+                    结构体struct
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.3.7" data-path="../../go/super/golang13.html">
+            
+                <a href="../../go/super/golang13.html">
+            
+                    
+                    接口interface
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.3.8" data-path="../../go/super/golang14.html">
+            
+                <a href="../../go/super/golang14.html">
+            
+                    
+                    接口内部实现
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.3.9" data-path="../../go/super/golang15.html">
+            
+                <a href="../../go/super/golang15.html">
+            
+                    
+                    interface应用和复习
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.3.10" data-path="../../go/super/golang16.html">
+            
+                <a href="../../go/super/golang16.html">
+            
+                    
+                    反射用法详解
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.3.11" data-path="../../go/super/golang17.html">
+            
+                <a href="../../go/super/golang17.html">
+            
+                    
+                    图解Go协程调度原理
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.3.12" data-path="../../go/super/golang18.html">
+            
+                <a href="../../go/super/golang18.html">
+            
+                    
+                    实现生产者消费者模型
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.3.13" data-path="../../go/super/golang19.html">
+            
+                <a href="../../go/super/golang19.html">
+            
+                    
+                    channel详解和协程优雅退出
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.3.14" data-path="../../go/super/golang42.html">
+            
+                <a href="../../go/super/golang42.html">
+            
+                    
+                    defer和panic
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.4" >
+            
+                <span>
+            
+                    
+                    [项目实战]
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.3.4.1" data-path="../../go/project/golang20.html">
+            
+                <a href="../../go/project/golang20.html">
+            
+                    
+                    打造高并发日志采集系统（一）
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.4.2" data-path="../../go/project/golang21.html">
+            
+                <a href="../../go/project/golang21.html">
+            
+                    
+                    打造高并发日志采集系统（二）
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.4.3" data-path="../../go/project/golang22.html">
+            
+                <a href="../../go/project/golang22.html">
+            
+                    
+                    打造高并发日志采集系统（三）
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.4.4" data-path="../../go/project/golang23.html">
+            
+                <a href="../../go/project/golang23.html">
+            
+                    
+                    打造高并发日志采集系统（四）
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.4.5" data-path="../../go/project/golang24.html">
+            
+                <a href="../../go/project/golang24.html">
+            
+                    
+                    打造高并发日志采集系统（五）
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.4.6" data-path="../../go/project/golang25.html">
+            
+                <a href="../../go/project/golang25.html">
+            
+                    
+                    打造高并发日志采集系统（六）
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.4.7" data-path="../../go/project/golang26.html">
+            
+                <a href="../../go/project/golang26.html">
+            
+                    
+                    打造高并发日志采集系统（七）
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.4.8" data-path="../../go/project/golang27.html">
+            
+                <a href="../../go/project/golang27.html">
+            
+                    
+                    打造高并发日志采集系统（八）
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.4.9" data-path="../../go/project/golang28.html">
+            
+                <a href="../../go/project/golang28.html">
+            
+                    
+                    打造高并发日志采集系统（九）
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.4.10" data-path="../../go/project/golang29.html">
+            
+                <a href="../../go/project/golang29.html">
+            
+                    
+                    打造高并发日志采集系统（十）
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.4.11" data-path="../../go/project/golang30.html">
+            
+                <a href="../../go/project/golang30.html">
+            
+                    
+                    谈谈高并发秒拍系统架构设计
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.5" >
+            
+                <span>
+            
+                    
+                    [存储]
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.3.5.1" data-path="../../go/db/golang34.html">
+            
+                <a href="../../go/db/golang34.html">
+            
+                    
+                    操作mongo
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.5.2" data-path="../../go/db/golang35.html">
+            
+                <a href="../../go/db/golang35.html">
+            
+                    
+                    使用redis
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.6" >
+            
+                <span>
+            
+                    
+                    [网络]
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.3.6.1" data-path="../../go/net/golang31.html">
+            
+                <a href="../../go/net/golang31.html">
+            
+                    
+                    netpoll原理(一)
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.6.2" data-path="../../go/net/golang32.html">
+            
+                <a href="../../go/net/golang32.html">
+            
+                    
+                    netpoll原理(二)
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.6.3" data-path="../../go/net/golang33.html">
+            
+                <a href="../../go/net/golang33.html">
+            
+                    
+                    化繁为简，写一个简单好用的server
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.6.4" data-path="../../go/net/golang36.html">
+            
+                <a href="../../go/net/golang36.html">
+            
+                    
+                    对io.readfull的理解
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.7" >
+            
+                <span>
+            
+                    
+                    [博客系统]
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.3.7.1" data-path="../../go/blog/golang37.html">
+            
+                <a href="../../go/blog/golang37.html">
+            
+                    
+                    博客系统后台开发(一)服务结构
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.7.2" data-path="../../go/blog/golang38.html">
+            
+                <a href="../../go/blog/golang38.html">
+            
+                    
+                    博客系统后台开发(二)添加渲染
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.7.3" data-path="../../go/blog/golang39.html">
+            
+                <a href="../../go/blog/golang39.html">
+            
+                    
+                    博客系统后台开发(三)完善项目并容器化
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.8" >
+            
+                <span>
+            
+                    
+                    [面试]
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.3.8.1" data-path="../../go/interview/golang40.html">
+            
+                <a href="../../go/interview/golang40.html">
+            
+                    
+                    面试题汇总(一)
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.8.2" data-path="../../go/interview/golang41.html">
+            
+                <a href="../../go/interview/golang41.html">
+            
+                    
+                    面试题汇总(二)
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4" >
+            
+                <span>
+            
+                    
+                    [Python]
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.4.1" >
+            
+                <span>
+            
+                    
+                    [基础]
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.4.1.1" data-path="../../python/base/python1.html">
+            
+                <a href="../../python/base/python1.html">
+            
+                    
+                    变量和函数
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.1.2" data-path="../../python/base/python2.html">
+            
+                <a href="../../python/base/python2.html">
+            
+                    
+                    参数解析argparse
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.1.3" data-path="../../python/base/python3.html">
+            
+                <a href="../../python/base/python3.html">
+            
+                    
+                    生成器和迭代器
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.1.4" data-path="../../python/base/python4.html">
+            
+                <a href="../../python/base/python4.html">
+            
+                    
+                    zip库的使用
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.1.5" data-path="../../python/base/python6.html">
+            
+                <a href="../../python/base/python6.html">
+            
+                    
+                    函数式编程
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.1.6" data-path="../../python/base/python8.html">
+            
+                <a href="../../python/base/python8.html">
+            
+                    
+                    定制类和枚举
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.1.7" data-path="../../python/base/python10.html">
+            
+                <a href="../../python/base/python10.html">
+            
+                    
+                    元类
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.1.8" data-path="../../python/base/python11.html">
+            
+                <a href="../../python/base/python11.html">
+            
+                    
+                    异常处理和测试
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.1.9" data-path="../../python/base/python15.html">
+            
+                <a href="../../python/base/python15.html">
+            
+                    
+                    内建模块
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.1.10" data-path="../../python/base/processthread.html">
+            
+                <a href="../../python/base/processthread.html">
+            
+                    
+                    进程和线程
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.1.11" data-path="../../python/base/rematch.html">
+            
+                <a href="../../python/base/rematch.html">
+            
+                    
+                    正则表达式
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.1.12" data-path="../../python/base/python19.html">
+            
+                <a href="../../python/base/python19.html">
+            
+                    
+                    常见的第三方库
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.1.13" data-path="../../python/base/python20.html">
+            
+                <a href="../../python/base/python20.html">
+            
+                    
+                    网络编程
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.1.14" data-path="../../python/base/python22.html">
+            
+                <a href="../../python/base/python22.html">
+            
+                    
+                    访问数据库
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.1.15" data-path="../../python/base/python28.html">
+            
+                <a href="../../python/base/python28.html">
+            
+                    
+                    单例模式
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.1.16" data-path="../../python/base/pythonio.html">
+            
+                <a href="../../python/base/pythonio.html">
+            
+                    
+                    文件读写和序列化
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.2" >
+            
+                <span>
+            
+                    
+                    [项目实战]
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.4.2.1" data-path="../../python/proj/python7.html">
+            
+                <a href="../../python/proj/python7.html">
+            
+                    
+                    打飞机
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.2.2" data-path="../../python/proj/python16.html">
+            
+                <a href="../../python/proj/python16.html">
+            
+                    
+                    获取糗事百科段子
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.2.3" data-path="../../python/proj/python5.html">
+            
+                <a href="../../python/proj/python5.html">
+            
+                    
+                    2048游戏
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.2.4" data-path="../../python/proj/python17.html">
+            
+                <a href="../../python/proj/python17.html">
+            
+                    
+                    urlib爬虫
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.2.5" data-path="../../python/proj/python18.html">
+            
+                <a href="../../python/proj/python18.html">
+            
+                    
+                    爬虫中加入cookie
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.2.6" data-path="../../python/proj/python21.html">
+            
+                <a href="../../python/proj/python21.html">
+            
+                    
+                    smtp发送邮件
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.2.7" data-path="../../python/proj/python23.html">
+            
+                <a href="../../python/proj/python23.html">
+            
+                    
+                    requests库爬取猫眼电影
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.2.8" data-path="../../python/proj/python24.html">
+            
+                <a href="../../python/proj/python24.html">
+            
+                    
+                    Xpath解析并抓取美女图片
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.2.9" data-path="../../python/proj/python25.html">
+            
+                <a href="../../python/proj/python25.html">
+            
+                    
+                    BeautifulSoup介绍和实战
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.2.10" data-path="../../python/proj/python26.html">
+            
+                <a href="../../python/proj/python26.html">
+            
+                    
+                    Ajax爬取今日头条cosplay美女
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.2.11" data-path="../../python/proj/python27.html">
+            
+                <a href="../../python/proj/python27.html">
+            
+                    
+                    selenium 抓取买家秀
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.2.12" data-path="../../python/proj/python29.html">
+            
+                <a href="../../python/proj/python29.html">
+            
+                    
+                    Tinker+BeautifulSoup爬虫
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5" >
+            
+                <span>
+            
+                    
+                    [网络编程]
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.5.1" >
+            
+                <span>
+            
+                    
+                    [protobuffer]
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.5.1.1" data-path="../../net/protobuffer/probuff.html">
+            
+                <a href="../../net/protobuffer/probuff.html">
+            
+                    
+                    protobuffer配置
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.2" >
+            
+                <span>
+            
+                    
+                    [tcp基础]
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.5.2.1" data-path="../../net/tcp/cpptcpnian.html">
+            
+                <a href="../../net/tcp/cpptcpnian.html">
+            
+                    
+                    TCP粘包处理
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.2.2" data-path="../../net/tcp/tcpapi.html">
+            
+                <a href="../../net/tcp/tcpapi.html">
+            
+                    
+                    Linux环境API
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.2.3" data-path="../../net/tcp/econreset.html">
+            
+                <a href="../../net/tcp/econreset.html">
+            
+                    
+                    ECONNRESET
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.2.4" data-path="../../net/tcp/newproblem.html">
+            
+                <a href="../../net/tcp/newproblem.html">
+            
+                    
+                    常见问题总结
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.2.5" data-path="../../net/tcp/easyloopser.html">
+            
+                <a href="../../net/tcp/easyloopser.html">
+            
+                    
+                    简单循环服务器
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.2.6" data-path="../../net/tcp/easymulser.html">
+            
+                <a href="../../net/tcp/easymulser.html">
+            
+                    
+                    简单的并发服务器
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.3" >
+            
+                <span>
+            
+                    
+                    [并发]
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.5.3.1" data-path="../../net/concurrency/ioservertype.html">
+            
+                <a href="../../net/concurrency/ioservertype.html">
+            
+                    
+                    大并发服务器框架设计
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.3.2" data-path="../../net/concurrency/selectlearn.html">
+            
+                <a href="../../net/concurrency/selectlearn.html">
+            
+                    
+                    细说select
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.3.3" data-path="../../net/concurrency/epoll1.html">
+            
+                <a href="../../net/concurrency/epoll1.html">
+            
+                    
+                    epoll基础api
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.3.4" data-path="../../net/concurrency/epoll2.html">
+            
+                <a href="../../net/concurrency/epoll2.html">
+            
+                    
+                    epoll server
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.3.5" data-path="../../net/concurrency/miniserver.html">
+            
+                <a href="../../net/concurrency/miniserver.html">
+            
+                    
+                    epoll 封装
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.3.6" data-path="../../net/concurrency/epollim.html">
+            
+                <a href="../../net/concurrency/epollim.html">
+            
+                    
+                    epoll注意事项
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.4" >
+            
+                <span>
+            
+                    
+                    [源码刨析]
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.5.4.1" data-path="../../net/source/redisset.html">
+            
+                <a href="../../net/source/redisset.html">
+            
+                    
+                    redis 配置和使用
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.4.2" data-path="../../net/source/networkbook.html">
+            
+                <a href="../../net/source/networkbook.html">
+            
+                    
+                    网络编程资料
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.4.3" data-path="../../net/source/libevent1.html">
+            
+                <a href="../../net/source/libevent1.html">
+            
+                    
+                    libevent多线程接口
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.4.4" data-path="../../net/source/libevent2.html">
+            
+                <a href="../../net/source/libevent2.html">
+            
+                    
+                    libevent之eventbase
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.4.5" data-path="../../net/source/libevent3.html">
+            
+                <a href="../../net/source/libevent3.html">
+            
+                    
+                    libevent之eventloop轮询
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.4.6" data-path="../../net/source/libevent4.html">
+            
+                <a href="../../net/source/libevent4.html">
+            
+                    
+                    libevent之bufferevent
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.4.7" data-path="../../net/source/libevent5.html">
+            
+                <a href="../../net/source/libevent5.html">
+            
+                    
+                    libevent实战
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.4.8" data-path="../../net/source/winlibevent.html">
+            
+                <a href="../../net/source/winlibevent.html">
+            
+                    
+                    windows环境libevent搭建
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.4.9" data-path="../../net/source/libevlearn.html">
+            
+                <a href="../../net/source/libevlearn.html">
+            
+                    
+                    libevent源码刨析
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.4.10" data-path="../../net/source/libiopbase.html">
+            
+                <a href="../../net/source/libiopbase.html">
+            
+                    
+                    libiop基础
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.4.11" data-path="../../net/source/libiop.html">
+            
+                <a href="../../net/source/libiop.html">
+            
+                    
+                    libiop通讯流程
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.4.12" data-path="../../net/source/redis1.html">
+            
+                <a href="../../net/source/redis1.html">
+            
+                    
+                    对于redis底层框架的理解(一)
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.4.13" data-path="../../net/source/redis2.html">
+            
+                <a href="../../net/source/redis2.html">
+            
+                    
+                    对于redis底层框架的理解(二)
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.4.14" data-path="../../net/source/redis3.html">
+            
+                <a href="../../net/source/redis3.html">
+            
+                    
+                    对于redis底层框架的理解(三)
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.4.15" data-path="../../net/source/redis4.html">
+            
+                <a href="../../net/source/redis4.html">
+            
+                    
+                    对于redis底层框架的理解(四)
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.4.16" data-path="../../net/source/redis5.html">
+            
+                <a href="../../net/source/redis5.html">
+            
+                    
+                    对于redis底层框架的理解(五)
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6" >
+            
+                <span>
+            
+                    
+                    [解决方案]
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.6.1" >
+            
+                <span>
+            
+                    
+                    [python]
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.6.1.1" data-path="../../sln/section1/sln01.html">
+            
+                <a href="../../sln/section1/sln01.html">
+            
+                    
+                    搭建python虚拟环境
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6.2" >
+            
+                <span>
+            
+                    
+                    [hexo]
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.6.2.1" data-path="../../sln/section2/hexoblogs.html">
+            
+                <a href="../../sln/section2/hexoblogs.html">
+            
+                    
+                    hexo搭建个人博客
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6.2.2" data-path="../../sln/section2/hexoblogs2.html">
+            
+                <a href="../../sln/section2/hexoblogs2.html">
+            
+                    
+                    hexo问题解决方案
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6.3" >
+            
+                <span>
+            
+                    
+                    [web安全]
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.6.3.1" data-path="../../sln/section3/web01.html">
+            
+                <a href="../../sln/section3/web01.html">
+            
+                    
+                    解决博客脚本注入问题
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+
+    
+
+    <li class="divider"></li>
+
+    <li>
+        <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
+            Published with GitBook
+        </a>
+    </li>
+</ul>
+
+</nav>
+     
+  </div>
+
+  <!-- Content nav -->
+  <div class="book-anchor">
+    <div class="book-anchor-title"></div>
+
+    <div class="book-anchor-body"></div>
+  </div>
+
+  <div class="book-body">
+    
+    <div class="body-inner">
+       
+
+<div class="book-header" role="navigation">
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href="../../.." >vscode配置C++以及boost库开发环境</a>
+    </h1>
+</div>
+
+
+
+      <div class="page-wrapper" tabindex="-1" role="main">
+        <div class="page-inner">
+          
+<div id="book-search-results">
+    <div class="search-noresults">
+    
+          <section class="normal markdown-section">
+             <h2 id="&#x4E0B;&#x8F7D;vscode">&#x4E0B;&#x8F7D;vscode</h2>
+<p>&#x53BB;&#x5B98;&#x7F51;<a href="https://code.visualstudio.com/" target="_blank">https://code.visualstudio.com/</a>&#x4E0B;&#x8F7D;&#x6700;&#x65B0;&#x7248;&#x672C;&#x5C31;&#x53EF;&#x4EE5;&#x4E86;
+<!--more-->
+<a href="https://cdn.llfc.club/1675217312867.jpg" data-lightbox="6fd8ada0-ed0e-4de6-8811-9f093da6bf86" data-title="https://cdn.llfc.club/1675217312867.jpg" target="_blank"><img src="https://cdn.llfc.club/1675217312867.jpg" alt="https://cdn.llfc.club/1675217312867.jpg"></a>
+&#x4E0B;&#x8F7D;&#x540E;&#x6253;&#x5F00;vscode&#xFF0C;&#x5B89;&#x88C5;C++&#x6269;&#x5C55;
+<a href="https://cdn.llfc.club/1675217797696.jpg" data-lightbox="2bdb06a8-70a9-46a9-8f3b-4d19b878a7a3" data-title="https://cdn.llfc.club/1675217797696.jpg" target="_blank"><img src="https://cdn.llfc.club/1675217797696.jpg" alt="https://cdn.llfc.club/1675217797696.jpg"></a>
+&#x76EE;&#x524D;&#x5C31;&#x5148;&#x914D;&#x7F6E;&#x5230;&#x8FD9;&#x91CC;&#xFF0C;&#x4EE5;&#x540E;&#x7684;&#x914D;&#x7F6E;&#x7559;&#x7ED9;&#x4E0B;&#x9762;&#x4ECB;&#x7ECD;&#x3002;</p>
+<h2 id="&#x4E0B;&#x8F7D;mingw">&#x4E0B;&#x8F7D;mingw</h2>
+<p>&#x53BB;mingw&#x5B98;&#x7F51;&#x4E0B;&#x8F7D;&#x538B;&#x7F29;&#x5305;
+<a href="https://sourceforge.net/projects/mingw-w64/files/" target="_blank">https://sourceforge.net/projects/mingw-w64/files/</a>
+&#x4E0B;&#x8F7D;&#x901F;&#x5EA6;&#x6162;&#x7684;&#x8BDD;&#x53EF;&#x4EE5;&#x53BB;&#x6211;&#x7684;&#x7F51;&#x76D8;&#x4E0B;&#x8F7D;&#xFF0C;&#x6574;&#x7406;&#x4E86;mingw&#x548C;boost&#x7684;&#x5B89;&#x88C5;&#x5305;</p>
+<p>&#x94FE;&#x63A5;: <a href="https://pan.baidu.com/s/1IJSyQqdf-lbuFG12FhDt2A?pwd=2dhi" target="_blank">https://pan.baidu.com/s/1IJSyQqdf-lbuFG12FhDt2A?pwd=2dhi</a> 
+&#x63D0;&#x53D6;&#x7801;: 2dhi </p>
+<p>&#x9009;&#x62E9;x86_64-win32-seh,&#x5F53;&#x7136;&#x9009;&#x62E9;x86_64-posix-seh&#x4E5F;&#x53EF;&#x4EE5;&#x3002;&#x4E00;&#x4E2A;&#x662F;windows&#x7EBF;&#x7A0B;&#xFF0C;&#x4E00;&#x4E2A;&#x662F;posix&#x7EBF;&#x7A0B;&#x3002;
+<a href="https://cdn.llfc.club/1675218594895.jpg" data-lightbox="3bc21a2f-b783-4641-b5df-0a825c074163" data-title="https://cdn.llfc.club/1675218594895.jpg" target="_blank"><img src="https://cdn.llfc.club/1675218594895.jpg" alt="https://cdn.llfc.club/1675218594895.jpg"></a>
+&#x4E0B;&#x8F7D;&#x540E;&#x89E3;&#x538B;&#x7F29;&#x5230;&#x6307;&#x5B9A;&#x6587;&#x4EF6;&#x5939;&#xFF0C;&#x6211;&#x7684;&#x76EE;&#x5F55;&#x4E3A; D:\cppsoft\mingw64
+<a href="https://cdn.llfc.club/1675218863338.jpg" data-lightbox="dc0d625e-19d8-4b2a-91cb-6df834e2410e" data-title="https://cdn.llfc.club/1675218863338.jpg" target="_blank"><img src="https://cdn.llfc.club/1675218863338.jpg" alt="https://cdn.llfc.club/1675218863338.jpg"></a>
+&#x914D;&#x7F6E;&#x73AF;&#x5883;&#x53D8;&#x91CF;&#xFF0C;&#x9009;&#x62E9;&#x7528;&#x6237;&#x7684;&#x73AF;&#x5883;&#x53D8;&#x91CF;path, &#x6DFB;&#x52A0;D:\cppsoft\mingw64\bin&#xFF0C;&#x5177;&#x4F53;&#x8DEF;&#x5F84;&#x770B;&#x4F60;&#x81EA;&#x5DF1;&#x7684;&#x914D;&#x7F6E;
+<a href="https://cdn.llfc.club/1675219007194.jpg" data-lightbox="11467a4d-e5f9-4ffc-b85e-8c4c16f67c81" data-title="https://cdn.llfc.club/1675219007194.jpg" target="_blank"><img src="https://cdn.llfc.club/1675219007194.jpg" alt="https://cdn.llfc.club/1675219007194.jpg"></a>
+&#x6D4B;&#x8BD5;&#x662F;&#x5426;&#x914D;&#x7F6E;&#x6210;&#x529F;&#xFF0C;&#x6253;&#x5F00;cmd&#xFF0C;&#x5728;&#x91CC;&#x9762;&#x8F93;&#x5165;g++&#x6216;&#x8005;gcc&#xFF0C;&#x5982;&#x679C;&#x8F93;&#x51FA;no input files &#x5219;&#x8BF4;&#x660E;&#x914D;&#x7F6E;&#x6210;&#x529F;
+<a href="https://cdn.llfc.club/1675219207819.jpg" data-lightbox="d4f5f789-2ebc-43b4-a670-a03ec6650555" data-title="https://cdn.llfc.club/1675219207819.jpg" target="_blank"><img src="https://cdn.llfc.club/1675219207819.jpg" alt="https://cdn.llfc.club/1675219207819.jpg"></a></p>
+<h2 id="&#x914D;&#x7F6E;vscode-c&#x5F00;&#x53D1;&#x73AF;&#x5883;">&#x914D;&#x7F6E;vscode C++&#x5F00;&#x53D1;&#x73AF;&#x5883;</h2>
+<p>&#x4E3B;&#x8981;&#x5206;&#x4E3A;&#x914D;&#x7F6E;&#x7F16;&#x8BD1;&#x5668;&#x4FE1;&#x606F;&#xFF0C;&#x914D;&#x7F6E;&#x6784;&#x5EFA;&#x4EFB;&#x52A1;task.json&#x4EE5;&#x53CA;&#x914D;&#x7F6E;&#x8C03;&#x8BD5;&#x8BBE;&#x7F6E;lauch.json&#x6587;&#x4EF6;&#x4E09;&#x4E2A;&#x6B65;&#x9AA4;&#x3002;</p>
+<h3 id="&#x914D;&#x7F6E;&#x7F16;&#x8BD1;&#x5668;&#x4FE1;&#x606F;">&#x914D;&#x7F6E;&#x7F16;&#x8BD1;&#x5668;&#x4FE1;&#x606F;</h3>
+<p>&#x5728;vscode&#x754C;&#x9762;&#x6309;&#x4F4F;Ctrl + Shift + P &#x5524;&#x51FA;&#x914D;&#x7F6E;&#x754C;&#x9762;
+<a href="https://cdn.llfc.club/1675219377959.jpg" data-lightbox="4975775c-04b3-4caa-b7fd-5aa18d33e136" data-title="https://cdn.llfc.club/1675219377959.jpg" target="_blank"><img src="https://cdn.llfc.club/1675219377959.jpg" alt="https://cdn.llfc.club/1675219377959.jpg"></a>
+&#x5728;&#x8F93;&#x5165;&#x680F;&#x8F93;&#x5165;C/C+&#xFF0C; &#x9009;&#x62E9;&#x201C;Edit Configurations(UI)&#x201D;&#x8FDB;&#x5165;&#x914D;&#x7F6E;
+<a href="https://cdn.llfc.club/1675219489602.jpg" data-lightbox="4e9d1c1c-17a7-4e6f-935f-944553e914ea" data-title="https://cdn.llfc.club/1675219489602.jpg" target="_blank"><img src="https://cdn.llfc.club/1675219489602.jpg" alt="https://cdn.llfc.club/1675219489602.jpg"></a>
+&#x914D;&#x7F6E;&#x7F16;&#x8BD1;&#x5668;&#x8DEF;&#x5F84;&#x548C;IntelliSense&#x6A21;&#x5F0F;,&#x6211;&#x7684;&#x8DEF;&#x5F84;&#x662F;D:/mingw64/bin/g++.exe
+<a href="https://cdn.llfc.club/1675219605854.jpg" data-lightbox="10890259-c9d8-4248-8e45-98047d956bcf" data-title="https://cdn.llfc.club/1675219605854.jpg" target="_blank"><img src="https://cdn.llfc.club/1675219605854.jpg" alt="https://cdn.llfc.club/1675219605854.jpg"></a>
+&#x53E6;&#x5916;&#x8981;&#x6CE8;&#x610F;&#x914D;&#x7F6E;Include path,&#x5176;&#x4ED6;&#x4EBA;&#x7684;&#x535A;&#x5BA2;&#x5F88;&#x5C11;&#x63D0;&#x53CA;&#x8FD9;&#x70B9;&#xFF0C;&#x8FD9;&#x91CC;&#x7740;&#x91CD;&#x8BF4;&#x4E00;&#x4E0B;
+<a href="https://cdn.llfc.club/1675821919856.jpg" data-lightbox="c40b7df3-723c-49de-a8a5-ae5e3f9d4ca1" data-title="https://cdn.llfc.club/1675821919856.jpg" target="_blank"><img src="https://cdn.llfc.club/1675821919856.jpg" alt="https://cdn.llfc.club/1675821919856.jpg"></a>
+&#x4E0A;&#x8FF0;&#x60C5;&#x51B5;&#x914D;&#x7F6E;&#x597D;include&#x8DEF;&#x5F84;&#x540E;&#xFF0C;&#x5305;&#x542B;&#x7B2C;&#x4E09;&#x65B9;&#x5E93;&#x624D;&#x4E0D;&#x4F1A;&#x62A5;&#x9519;&#xFF0C;&#x5426;&#x5219;&#x4F1A;&#x6709;&#x9519;&#x8BEF;&#x63D0;&#x793A;&#x3002;
+ctrl+s&#x4FDD;&#x5B58;&#x540E;&#x4F1A;&#x751F;&#x6210;&#x4E00;&#x4E2A;.vscode&#x6587;&#x4EF6;&#x5939;&#xFF0C;.vscode&#x6587;&#x4EF6;&#x5939;&#x91CC;&#x6709;&#x4E00;&#x4E2A;c_cpp_properties.json&#x6587;&#x4EF6;&#xFF0C;&#x8BB0;&#x5F55;&#x4E86;&#x6211;&#x4EEC;&#x914D;&#x7F6E;&#x7684;&#x7F16;&#x8BD1;&#x5668;&#x4FE1;&#x606F;&#x3002;
+<a href="https://cdn.llfc.club/1675219958396.jpg" data-lightbox="0e19525a-83a4-4348-9904-916db7162087" data-title="https://cdn.llfc.club/1675219958396.jpg" target="_blank"><img src="https://cdn.llfc.club/1675219958396.jpg" alt="https://cdn.llfc.club/1675219958396.jpg"></a>
+json&#x6587;&#x4EF6;&#x4FE1;&#x606F;&#x5982;&#x4E0B;</p>
+<pre><code class="lang-json">{
+    <span class="hljs-string">&quot;configurations&quot;</span>: [
+        {
+            <span class="hljs-string">&quot;name&quot;</span>: <span class="hljs-string">&quot;Win32&quot;</span>,
+            <span class="hljs-string">&quot;includePath&quot;</span>: [
+                <span class="hljs-string">&quot;${workspaceFolder}/**&quot;</span>
+            ],
+            <span class="hljs-string">&quot;defines&quot;</span>: [
+                <span class="hljs-string">&quot;_DEBUG&quot;</span>,
+                <span class="hljs-string">&quot;UNICODE&quot;</span>,
+                <span class="hljs-string">&quot;_UNICODE&quot;</span>
+            ],
+            <span class="hljs-string">&quot;windowsSdkVersion&quot;</span>: <span class="hljs-string">&quot;10.0.22000.0&quot;</span>,
+            <span class="hljs-string">&quot;compilerPath&quot;</span>: <span class="hljs-string">&quot;D:/mingw64/bin/g++.exe&quot;</span>,
+            <span class="hljs-string">&quot;cStandard&quot;</span>: <span class="hljs-string">&quot;c17&quot;</span>,
+            <span class="hljs-string">&quot;cppStandard&quot;</span>: <span class="hljs-string">&quot;c++17&quot;</span>,
+            <span class="hljs-string">&quot;intelliSenseMode&quot;</span>: <span class="hljs-string">&quot;gcc-x64&quot;</span>
+        }
+    ],
+    <span class="hljs-string">&quot;version&quot;</span>: <span class="hljs-number">4</span>
+}
+</code></pre>
+<h3 id="&#x914D;&#x7F6E;&#x6784;&#x5EFA;&#x4EFB;&#x52A1;">&#x914D;&#x7F6E;&#x6784;&#x5EFA;&#x4EFB;&#x52A1;</h3>
+<p>&#x914D;&#x7F6E;&#x4EFB;&#x52A1;&#x4E4B;&#x524D;&#x6211;&#x4EEC;&#x5148;&#x5199;&#x4E00;&#x4E2A;.cpp&#x548C;.h&#x6587;&#x4EF6;&#x7528;&#x6765;&#x6D4B;&#x8BD5;&#xFF0C;&#x7EC4;&#x7EC7;&#x5F62;&#x5F0F;&#x5982;&#x4E0B;
+<a href="https://cdn.llfc.club/1675221432283.jpg" data-lightbox="92eac07f-dab5-426a-ad9e-acabe6a1e072" data-title="https://cdn.llfc.club/1675221432283.jpg" target="_blank"><img src="https://cdn.llfc.club/1675221432283.jpg" alt="https://cdn.llfc.club/1675221432283.jpg"></a>
+&#x7136;&#x540E;&#x9009;&#x4E2D;&#x5DE6;&#x4FA7;&#x76EE;&#x5F55;&#x6811;&#x7684;cpp&#x6587;&#x4EF6;&#xFF0C;&#x4FDD;&#x8BC1;&#x6211;&#x4EEC;&#x6240;&#x6709;&#x7684;&#x914D;&#x7F6E;&#x90FD;&#x662F;&#x57FA;&#x4E8E;cpp&#x6784;&#x5EFA;&#x7684;&#x3002;
+&#x63A5;&#x4E0B;&#x6765;&#xFF0C;&#x521B;&#x5EFA;&#x4E00;&#x4E2A;tasks.json&#x6587;&#x4EF6;&#x6765;&#x544A;&#x8BC9;VS Code&#x5982;&#x4F55;&#x6784;&#x5EFA;&#xFF08;&#x7F16;&#x8BD1;&#xFF09;&#x7A0B;&#x5E8F;&#x3002;&#x8BE5;&#x4EFB;&#x52A1;&#x5C06;&#x8C03;&#x7528;g++&#x7F16;&#x8BD1;&#x5668;&#x57FA;&#x4E8E;&#x6E90;&#x4EE3;&#x7801;&#x521B;&#x5EFA;&#x53EF;&#x6267;&#x884C;&#x6587;&#x4EF6;&#x3002; &#x6309;&#x5FEB;&#x6377;&#x952E;Ctrl+Shift+P&#x8C03;&#x51FA;&#x547D;&#x4EE4;&#x9762;&#x677F;&#xFF0C;&#x8F93;&#x5165;tasks&#xFF0C;&#x9009;&#x62E9;&#x201C;Tasks:Configure Default Build Task&#x201D;&#xFF1A;
+<a href="https://cdn.llfc.club/1675220317789.jpg" data-lightbox="24e4f69b-1c59-4e85-94f8-9723991f8454" data-title="https://cdn.llfc.club/1675220317789.jpg" target="_blank"><img src="https://cdn.llfc.club/1675220317789.jpg" alt="https://cdn.llfc.club/1675220317789.jpg"></a>
+&#x53EF;&#x4EE5;&#x770B;&#x5230;vscode&#x5217;&#x4E3E;&#x51FA;&#x6211;&#x7684;&#x7535;&#x8111;&#x5DF2;&#x7ECF;&#x5B89;&#x88C5;&#x7684;&#x6240;&#x6709;C++&#x7F16;&#x8BD1;&#x5668;&#xFF0C;&#x8FD9;&#x91CC;&#x9009;&#x62E9;
+&#x518D;&#x9009;&#x62E9;&#x201C;C/C++: g++.exe build active file&#x201D;,&#x8FD9;&#x662F;&#x6211;&#x4EEC;&#x521A;&#x521A;&#x5B89;&#x88C5;&#x7684;mingw&#x7F16;&#x8BD1;&#x5668;
+<a href="https://cdn.llfc.club/1675220601273.jpg" data-lightbox="fb3be4b3-8e78-4c32-9cb7-c8811e21ee5f" data-title="https://cdn.llfc.club/1675220601273.jpg" target="_blank"><img src="https://cdn.llfc.club/1675220601273.jpg" alt="https://cdn.llfc.club/1675220601273.jpg"></a>
+&#x70B9;&#x51FB;&#x540E;vscode&#x4E3A;&#x6211;&#x4EEC;&#x81EA;&#x52A8;&#x751F;&#x6210;&#x4E86;task.json&#x6587;&#x4EF6;
+<a href="https://cdn.llfc.club/1675221243876.jpg" data-lightbox="bd95dd08-6f7e-40bc-bd4d-e837c0608e45" data-title="https://cdn.llfc.club/1675221243876.jpg" target="_blank"><img src="https://cdn.llfc.club/1675221243876.jpg" alt="https://cdn.llfc.club/1675221243876.jpg"></a>
+&#x8BE6;&#x7EC6;&#x7684;task.json&#x914D;&#x7F6E;&#x4FE1;&#x606F;&#x5982;&#x4E0B;</p>
+<pre><code class="lang-json">{
+    <span class="hljs-string">&quot;version&quot;</span>: <span class="hljs-string">&quot;2.0.0&quot;</span>,
+    <span class="hljs-string">&quot;tasks&quot;</span>: [
+        {
+            <span class="hljs-string">&quot;type&quot;</span>: <span class="hljs-string">&quot;cppbuild&quot;</span>,
+            <span class="hljs-string">&quot;label&quot;</span>: <span class="hljs-string">&quot;C/C++: g++.exe build active file&quot;</span>,
+            <span class="hljs-string">&quot;command&quot;</span>: <span class="hljs-string">&quot;D:/mingw64/bin/g++.exe&quot;</span>,
+            <span class="hljs-string">&quot;args&quot;</span>: [
+                <span class="hljs-string">&quot;-fdiagnostics-color=always&quot;</span>,
+                <span class="hljs-string">&quot;-g&quot;</span>,
+                <span class="hljs-string">&quot;${file}&quot;</span>,
+                <span class="hljs-string">&quot;-o&quot;</span>,
+                <span class="hljs-string">&quot;${fileDirname}\\${fileBasenameNoExtension}.exe&quot;</span>
+            ],
+            <span class="hljs-string">&quot;options&quot;</span>: {
+                <span class="hljs-string">&quot;cwd&quot;</span>: <span class="hljs-string">&quot;D:/mingw64/bin&quot;</span>
+            },
+            <span class="hljs-string">&quot;problemMatcher&quot;</span>: [
+                <span class="hljs-string">&quot;$gcc&quot;</span>
+            ],
+            <span class="hljs-string">&quot;group&quot;</span>: {
+                <span class="hljs-string">&quot;kind&quot;</span>: <span class="hljs-string">&quot;build&quot;</span>,
+                <span class="hljs-string">&quot;isDefault&quot;</span>: <span class="hljs-literal">true</span>
+            },
+            <span class="hljs-string">&quot;detail&quot;</span>: <span class="hljs-string">&quot;compiler: D:/mingw64/bin/g++.exe&quot;</span>
+        }
+    ]
+}
+</code></pre>
+<h3 id="&#x914D;&#x7F6E;&#x8C03;&#x8BD5;&#x8BBE;&#x7F6E;">&#x914D;&#x7F6E;&#x8C03;&#x8BD5;&#x8BBE;&#x7F6E;</h3>
+<p>&#x540C;&#x6837;&#x9009;&#x4E2D;&#x5DE6;&#x4FA7;&#x76EE;&#x5F55;&#x6811;&#x7684;cpp&#x6587;&#x4EF6;&#xFF0C;&#x4FDD;&#x8BC1;&#x6211;&#x4EEC;&#x6240;&#x6709;&#x7684;&#x914D;&#x7F6E;&#x90FD;&#x662F;&#x57FA;&#x4E8E;cpp&#x6784;&#x5EFA;&#x7684;&#x3002;
+&#x8FD9;&#x91CC;&#x4E3B;&#x8981;&#x662F;&#x4E3A;&#x4E86;&#x5728;.vscode&#x6587;&#x4EF6;&#x5939;&#x4E2D;&#x4EA7;&#x751F;&#x4E00;&#x4E2A;launch.json&#x6587;&#x4EF6;&#xFF0C;&#x7528;&#x6765;&#x914D;&#x7F6E;&#x8C03;&#x8BD5;&#x7684;&#x76F8;&#x5173;&#x4FE1;&#x606F;&#x3002;&#x70B9;&#x51FB;&#x83DC;&#x5355;&#x680F;&#x7684;Debug--&gt;Start Debugging&#xFF1A;
+<a href="https://cdn.llfc.club/vsluanch.png" data-lightbox="4f64884c-c2fa-4246-a218-00f2cecb319e" data-title="https://cdn.llfc.club/vsluanch.png" target="_blank"><img src="https://cdn.llfc.club/vsluanch.png" alt="https://cdn.llfc.club/vsluanch.png"></a>
+&#x63A5;&#x4E0B;&#x6765;&#x9009;&#x62E9;C++(GDB/LLDB), &#x5F53;&#x7136;&#x4F60;&#x9009;&#x62E9;windows&#x7684;&#x4E5F;&#x53EF;&#x4EE5;&#x3002;
+<a href="https://cdn.llfc.club/1675221733059.jpg" data-lightbox="cbbbccfc-857a-41c2-86e4-79ca4db9b1b5" data-title="https://cdn.llfc.club/1675221733059.jpg" target="_blank"><img src="https://cdn.llfc.club/1675221733059.jpg" alt="https://cdn.llfc.club/1675221733059.jpg"></a>
+&#x7D27;&#x63A5;&#x7740;&#x4F1A;&#x4EA7;&#x751F;&#x4E00;&#x4E2A;launch.json&#x7684;&#x6587;&#x4EF6;&#x3002;
+&#x8FD9;&#x91CC;&#x6709;&#x7684;&#x4EBA;&#x6CA1;&#x6709;&#x751F;&#x6210;launch.json&#x6587;&#x4EF6;&#xFF0C;&#x800C;&#x662F;&#x76F4;&#x63A5;&#x8FD0;&#x884C;&#x6210;&#x529F;&#x4E86;&#xFF0C;&#x53EF;&#x4EE5;&#x4E0D;&#x914D;&#x7F6E;launch.json&#x6587;&#x4EF6;&#x4E86;&#x3002;
+&#x5982;&#x679C;&#x751F;&#x6210;launch.json&#x6587;&#x4EF6;&#xFF0C;&#x5219;&#x5982;&#x4E0B;</p>
+<pre><code class="lang-cpp">{
+    <span class="hljs-comment">// Use IntelliSense to learn about possible attributes.</span>
+    <span class="hljs-comment">// Hover to view descriptions of existing attributes.</span>
+    <span class="hljs-comment">// For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387</span>
+    <span class="hljs-string">&quot;version&quot;</span>: <span class="hljs-string">&quot;0.2.0&quot;</span>,
+    <span class="hljs-string">&quot;configurations&quot;</span>: []
+}
+</code></pre>
+<p>&#x5982;&#x679C;&#x60F3;&#x751F;&#x6210;launch.json&#x8FD8;&#x6709;&#x4E00;&#x4E2A;&#x529E;&#x6CD5;&#xFF0C;&#x5C31;&#x662F;&#x70B9;&#x51FB;Run&#x9009;&#x62E9;Add Configuration, &#x5C31;&#x53EF;&#x4EE5;&#x751F;&#x6210;launch.json&#x6587;&#x4EF6;&#x4E86;&#x3002;
+<a href="https://cdn.llfc.club/vsluanch2.png" data-lightbox="f59030d6-6769-4f25-a088-164898cb35e4" data-title="https://cdn.llfc.club/vsluanch2.png" target="_blank"><img src="https://cdn.llfc.club/vsluanch2.png" alt="https://cdn.llfc.club/vsluanch2.png"></a>
+&#x5173;&#x4E8E;launch.json&#x6587;&#x4EF6;&#x7684;&#x914D;&#x7F6E;&#x53EF;&#x4EE5;&#x53C2;&#x8003;&#x5B98;&#x65B9;&#x6587;&#x6863;&#xFF0C;&#x5927;&#x5BB6;&#x53EF;&#x4EE5;&#x76F4;&#x63A5;&#x7528;&#x6211;&#x7684;&#x914D;&#x7F6E;&#x5982;&#x4E0B;</p>
+<pre><code class="lang-json">{
+    <span class="hljs-string">&quot;version&quot;</span>: <span class="hljs-string">&quot;0.2.0&quot;</span>,
+    <span class="hljs-string">&quot;configurations&quot;</span>: [
+        {
+            <span class="hljs-string">&quot;name&quot;</span>: <span class="hljs-string">&quot;g++.exe build and debug active file&quot;</span>,
+            <span class="hljs-string">&quot;type&quot;</span>: <span class="hljs-string">&quot;cppdbg&quot;</span>,
+            <span class="hljs-string">&quot;request&quot;</span>: <span class="hljs-string">&quot;launch&quot;</span>,
+            <span class="hljs-string">&quot;program&quot;</span>: <span class="hljs-string">&quot;${fileDirname}\\${fileBasenameNoExtension}.exe&quot;</span>,
+            <span class="hljs-string">&quot;args&quot;</span>: [],
+            <span class="hljs-string">&quot;stopAtEntry&quot;</span>: <span class="hljs-literal">false</span>,
+            <span class="hljs-string">&quot;cwd&quot;</span>: <span class="hljs-string">&quot;${workspaceFolder}&quot;</span>,
+            <span class="hljs-string">&quot;environment&quot;</span>: [],
+            <span class="hljs-string">&quot;externalConsole&quot;</span>: <span class="hljs-literal">true</span>, <span class="hljs-comment">//&#x4FEE;&#x6539;&#x6B64;&#x9879;&#xFF0C;&#x8BA9;&#x5176;&#x5F39;&#x51FA;&#x7EC8;&#x7AEF;</span>
+            <span class="hljs-string">&quot;MIMode&quot;</span>: <span class="hljs-string">&quot;gdb&quot;</span>,
+            <span class="hljs-string">&quot;miDebuggerPath&quot;</span>: <span class="hljs-string">&quot;D:\\cppsoft\\mingw64\\bin\\gdb.exe&quot;</span>,
+            <span class="hljs-string">&quot;setupCommands&quot;</span>: [
+                {
+                    <span class="hljs-string">&quot;description&quot;</span>: <span class="hljs-string">&quot;Enable pretty-printing for gdb&quot;</span>,
+                    <span class="hljs-string">&quot;text&quot;</span>: <span class="hljs-string">&quot;-enable-pretty-printing&quot;</span>,
+                    <span class="hljs-string">&quot;ignoreFailures&quot;</span>: <span class="hljs-literal">true</span>
+                }
+            ],
+            <span class="hljs-string">&quot;preLaunchTask&quot;</span>: <span class="hljs-string">&quot;task g++&quot;</span> <span class="hljs-comment">//&#x4FEE;&#x6539;&#x6B64;&#x9879;</span>
+        }
+    ]
+}
+</code></pre>
+<p>miDebuggerPath &#x6539;&#x4E3A;&#x4F60;&#x81EA;&#x5DF1;&#x7684;mingw&#x8DEF;&#x5F84;
+preLaunchTask &#x4E3A;&#x4EFB;&#x52A1;&#x540D;&#x5B57;&#xFF0C;&#x4F60;&#x53EF;&#x4EE5;&#x81EA;&#x5DF1;&#x5B9A;&#x4E49;&#x4E00;&#x4E2A;&#x4EFB;&#x52A1;&#x540D;&#x5B57;&#xFF0C;&#x4EFB;&#x52A1;&#x540D;&#x5B57;&#x8981;&#x548C;task.json&#x4E2D;&#x7684;label&#x76F8;&#x5339;&#x914D;&#x3002;&#x6211;&#x7684;&#x540D;&#x5B57;&#x4E3A;&quot;task g++&quot;&#xFF0C;&#x90A3;&#x4E48;&#x6211;&#x4F1A;&#x5C06;task.json&#x4E2D;&#x7684;label&#x4E5F;&#x6539;&#x4E3A;&quot;task g++&quot;&#x3002;&#x6211;&#x7684;task.json&#x6587;&#x4EF6;&#x5982;&#x4E0B;</p>
+<pre><code class="lang-cpp">{
+    <span class="hljs-string">&quot;version&quot;</span>: <span class="hljs-string">&quot;2.0.0&quot;</span>,
+    <span class="hljs-string">&quot;tasks&quot;</span>: [
+        {
+            <span class="hljs-string">&quot;type&quot;</span>: <span class="hljs-string">&quot;cppbuild&quot;</span>,
+            <span class="hljs-string">&quot;label&quot;</span>: <span class="hljs-string">&quot;task g++&quot;</span>,
+            <span class="hljs-string">&quot;command&quot;</span>: <span class="hljs-string">&quot;D:/mingw64/bin/g++.exe&quot;</span>,
+            <span class="hljs-string">&quot;args&quot;</span>: [
+                <span class="hljs-string">&quot;-fdiagnostics-color=always&quot;</span>,
+                <span class="hljs-string">&quot;-g&quot;</span>,
+                <span class="hljs-string">&quot;${cwd}//src//*.cpp&quot;</span>,
+                <span class="hljs-string">&quot;-o&quot;</span>,
+                <span class="hljs-string">&quot;${fileDirname}\\${fileBasenameNoExtension}.exe&quot;</span>
+            ],
+            <span class="hljs-string">&quot;options&quot;</span>: {
+                <span class="hljs-string">&quot;cwd&quot;</span>: <span class="hljs-string">&quot;D:/mingw64/bin&quot;</span>
+            },
+            <span class="hljs-string">&quot;problemMatcher&quot;</span>: [
+                <span class="hljs-string">&quot;$gcc&quot;</span>
+            ],
+            <span class="hljs-string">&quot;group&quot;</span>: {
+                <span class="hljs-string">&quot;kind&quot;</span>: <span class="hljs-string">&quot;build&quot;</span>,
+                <span class="hljs-string">&quot;isDefault&quot;</span>: <span class="hljs-literal">true</span>
+            },
+            <span class="hljs-string">&quot;detail&quot;</span>: <span class="hljs-string">&quot;compiler: D:/mingw64/bin/g++.exe&quot;</span>
+        }
+    ]
+}
+</code></pre>
+<ul>
+<li>&#x6211;&#x4EEC;&#x4FEE;&#x6539;&#x4E86;label&#x4E3A;&quot;task g++&quot;</li>
+<li>&#x6211;&#x4EEC;&#x4FEE;&#x6539;&#x4E86;args&#x4E2D;&#x7684;-g&#x9009;&#x9879;&#x4E3A;&quot;${cwd}//src//*.cpp&quot;
+&#x9009;&#x62E9;test.cpp&#x518D;&#x6B21;&#x8FD0;&#x884C;&#xFF0C;&#x7A0B;&#x5E8F;&#x901A;&#x8FC7;&#x3002;<h2 id="&#x5B89;&#x88C5;boost&#x5E93;">&#x5B89;&#x88C5;boost&#x5E93;</h2>
+&#x5148;&#x53BB;&#x5B98;&#x7F51;&#x4E0B;&#x8F7D;boost&#x5E93;&#x6700;&#x65B0;&#x7248;&#x672C;
+<a href="https://www.boost.org/users/download/" target="_blank">https://www.boost.org/users/download/</a>
+&#x9009;&#x62E9;windows&#x7248;&#x672C;&#x4E0B;&#x8F7D;&#xFF0C;zip&#x548C;7z&#x683C;&#x5F0F;&#x7684;&#x90FD;&#x53EF;&#x4EE5;
+<a href="https://cdn.llfc.club/1675230057233.jpg" data-lightbox="9934c76f-6cc1-4504-b0aa-ebe6cf79c626" data-title="https://cdn.llfc.club/1675230057233.jpg" target="_blank"><img src="https://cdn.llfc.club/1675230057233.jpg" alt="https://cdn.llfc.club/1675230057233.jpg"></a>
+&#x89E3;&#x538B;&#x540E;&#x6587;&#x4EF6;&#x5939;&#x4E0B;&#x6709;&#x4E2A;&#x4E00;&#x4E2A;bootstrap.bat&#x6587;&#x4EF6;&#xFF0C;&#x53CC;&#x51FB;&#x8FD0;&#x884C;&#x4F1A;&#x751F;&#x6210;b2.exe
+<a href="https://cdn.llfc.club/1675231068369.jpg" data-lightbox="7385a0a5-b955-41a6-b8d7-c39340d1b6b5" data-title="https://cdn.llfc.club/1675231068369.jpg" target="_blank"><img src="https://cdn.llfc.club/1675231068369.jpg" alt="https://cdn.llfc.club/1675231068369.jpg"></a>
+&#x7136;&#x540E;&#x5728;boost&#x6587;&#x4EF6;&#x5939;&#x4E0B;&#x542F;&#x52A8;cmd&#xFF0C;&#x6267;&#x884C; &quot;.\b2.exe toolset=gcc&quot;
+<a href="https://cdn.llfc.club/1675231439687.jpg" data-lightbox="c7c11d8c-02df-44c1-b8a6-6c23b20f9f75" data-title="https://cdn.llfc.club/1675231439687.jpg" target="_blank"><img src="https://cdn.llfc.club/1675231439687.jpg" alt="https://cdn.llfc.club/1675231439687.jpg"></a>
+&#x7F16;&#x8BD1;&#x65F6;&#x95F4;&#x548C;&#x673A;&#x5668;&#x6027;&#x80FD;&#x6709;&#x5173;&#xFF0C;&#x6267;&#x884C;&#x7F16;&#x8BD1;&#x8FC7;&#x540E;&#xFF0C;&#x4F1A;&#x5728;stage&#x6587;&#x4EF6;&#x5939;&#x4E0B;&#x751F;&#x6210;lib&#x6587;&#x4EF6;&#x5939;&#xFF0C;&#x91CC;&#x9762;&#x5C31;&#x662F;&#x6211;&#x4EEC;&#x8981;&#x7528;&#x5230;&#x7684;lib&#x5E93;&#x3002;
+<a href="https://cdn.llfc.club/1675232553339.jpg" data-lightbox="ee320b21-132e-4310-965d-3921c1151d22" data-title="https://cdn.llfc.club/1675232553339.jpg" target="_blank"><img src="https://cdn.llfc.club/1675232553339.jpg" alt="https://cdn.llfc.club/1675232553339.jpg"></a>
+&#x63A5;&#x4E0B;&#x6765;&#x9700;&#x8981;&#x5C06;boost&#x6587;&#x4EF6;&#x5939;&#x4E0B;&#x7684;staget&#x6587;&#x4EF6;&#x5939;&#x4E0B;&#x7684;lib&#x6587;&#x4EF6;&#x5939;&#x4E0B;&#x7684;&#x5E93;&#x653E;&#x5230;mingw&#x7684;&#x6587;&#x4EF6;&#x5939;&#x4E0B;x86_64-w64-mingw32&#x7684;&#x6587;&#x4EF6;&#x5939;&#x4E0B;&#x7684;lib&#x6587;&#x4EF6;&#x5939;&#x5185;&#x3002;
+&#x6211;&#x7684;&#x76EE;&#x5F55;&#x5C31;&#x662F;&#x4ECE;&quot;D:\TSBrowserDownloads\boost_1_81_0\stage\lib&quot;&#x590D;&#x5236;&#x5230;&quot;D:\mingw64\x86_64-w64-mingw32\lib&quot;&#x3002;
+<a href="https://cdn.llfc.club/1675232714373.jpg" data-lightbox="5ded9259-6f78-4122-9eae-af81fc80fe47" data-title="https://cdn.llfc.club/1675232714373.jpg" target="_blank"><img src="https://cdn.llfc.club/1675232714373.jpg" alt="https://cdn.llfc.club/1675232714373.jpg"></a>
+&#x540C;&#x65F6;&#x4E5F;&#x8981;&#x628A;boost&#x7684;&#x5934;&#x6587;&#x4EF6;&#x4ECE;boost&#x6587;&#x4EF6;&#x5939;&#x4E0B;&#x62F7;&#x8D1D;&#x5230;x86_64-w64-mingw32&#x7684;include&#x6587;&#x4EF6;&#x5939;&#x4E0B;
+&#x4E5F;&#x5C31;&#x662F;&#x4ECE;&quot;D:\TSBrowserDownloads\boost_1_81_0\boost&quot;&#x62F7;&#x8D1D;&#x5230;D:\mingw64\x86_64-w64-mingw32\include
+<a href="https://cdn.llfc.club/1675233325569.jpg" data-lightbox="de28dd33-10c1-4f74-a421-7ce69967cf22" data-title="https://cdn.llfc.club/1675233325569.jpg" target="_blank"><img src="https://cdn.llfc.club/1675233325569.jpg" alt="https://cdn.llfc.club/1675233325569.jpg"></a><h2 id="&#x6D4B;&#x8BD5;boost&#x5E93;">&#x6D4B;&#x8BD5;boost&#x5E93;</h2>
+&#x9700;&#x8981;&#x5BF9;&#x5DF2;&#x7ECF;&#x914D;&#x7F6E;&#x5B8C;&#x6210;&#x7684;boost&#x5E93;&#x8FDB;&#x884C;&#x6D4B;&#x8BD5;&#xFF0C;&#x6211;&#x4EEC;&#x5199;&#x4E00;&#x4E2A;&#x7A0B;&#x5E8F;, &#x66FF;&#x6362;&#x539F;&#x6765;&#x7684;test.cpp&#x7684;main&#x51FD;&#x6570;</li>
+</ul>
+<pre><code class="lang-cpp"><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;iostream&gt;</span></span>
+<span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;string&gt;</span></span>
+<span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-string">&quot;boost/lexical_cast.hpp&quot;</span></span>
+
+<span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span>
+</span>{
+    <span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> <span class="hljs-built_in">std</span>;
+    <span class="hljs-built_in">cout</span> &lt;&lt; <span class="hljs-string">&quot;Enter your weight: &quot;</span>;
+    <span class="hljs-keyword">float</span> weight;
+    <span class="hljs-built_in">cin</span> &gt;&gt; weight;
+    <span class="hljs-built_in">string</span> gain = <span class="hljs-string">&quot;A 10% increase raises &quot;</span>;
+    <span class="hljs-built_in">string</span> wt = boost::lexical_cast&lt;<span class="hljs-built_in">string</span>&gt; (weight);
+    gain = gain + wt + <span class="hljs-string">&quot; to &quot;</span>;      <span class="hljs-comment">// string operator()</span>
+    weight = <span class="hljs-number">1.1</span> * weight;
+    gain = gain + boost::lexical_cast&lt;<span class="hljs-built_in">string</span>&gt;(weight) + <span class="hljs-string">&quot;.&quot;</span>;
+    <span class="hljs-built_in">cout</span> &lt;&lt; gain &lt;&lt; <span class="hljs-built_in">endl</span>;
+    system(<span class="hljs-string">&quot;pause&quot;</span>);
+    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+}
+</code></pre>
+<p>&#x6211;&#x4EEC;&#x70B9;&#x51FB;&#x8C03;&#x8BD5;&#x7684;&#x4E09;&#x89D2;&#x7B26;&#x53F7;&#x6216;&#x8005;&#x83DC;&#x5355;&#x91CC;&#x7684;run&#x547D;&#x4EE4;&#xFF0C;&#x53EF;&#x4EE5;&#x770B;&#x5230;&#x8FD0;&#x884C;&#x6210;&#x529F;&#x4E86;&#xFF0C;&#x5E76;&#x4E14;&#x5F39;&#x51FA;&#x4E86;&#x7A97;&#x53E3;
+<a href="https://cdn.llfc.club/1675233803676.jpg" data-lightbox="5c9e5c39-f181-4b33-ba66-affcb68a25de" data-title="https://cdn.llfc.club/1675233803676.jpg" target="_blank"><img src="https://cdn.llfc.club/1675233803676.jpg" alt="https://cdn.llfc.club/1675233803676.jpg"></a></p>
+<h2 id="&#x603B;&#x7ED3;">&#x603B;&#x7ED3;</h2>
+<p>&#x6211;&#x5C06;&#x914D;&#x7F6E;&#x597D;&#x7684;&#x9879;&#x76EE;demo&#x63D0;&#x4EA4;&#x5230;gitee&#x4E86;&#xFF0C;&#x611F;&#x5174;&#x8DA3;&#x7684;&#x53EF;&#x4EE5;&#x770B;&#x4E00;&#x770B;
+&#x9879;&#x76EE;&#x5730;&#x5740;
+<a href="https://gitee.com/secondtonone1/testvscpp" target="_blank">https://gitee.com/secondtonone1/testvscpp</a></p>
+ 
+          </section>
+          
+    </div>
+    <div class="search-results">
+        <div class="has-results">
+            
+            <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+            <ul class="search-results-list"></ul>
+            
+        </div>
+        <div class="no-results">
+            
+            <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+            
+        </div>
+    </div>
+</div>
+ 
+          <div class="book-footer">
+            
+            <div class="donate">
+              <div>『 赠人玫瑰 🌹 手有余香 』</div>
+              <button class="donate-btn" onclick="showModal()">赞赏</button>
+            </div>
+             
+            <div class="copyright"></div>
+            
+          </div>
+          
+        </div>
+      </div>
+      
+    </div>
+
+        
+  </div>
+  <script>
+    function showModal() {
+      document.getElementsByClassName("mask")[0].style.display = "block";
+      document.getElementsByClassName("donate-modal")[0].style.display =
+        "block";
+    }
+    // 切换赞赏码
+    function showDonateImg(num) {
+      let alipay = "";
+      let wxpay = ""
+      if(num){
+        wxpay = "hidden"
+      }else{
+        alipay = "hidden"
+      }
+      document.getElementById("wxpay-code").hidden = wxpay;
+      document.getElementById("alipay-code").hidden = alipay;
+      document.getElementsByName("pay-way")[num].checked = "checked";
+    }
+
+    // 关闭赞赏框
+    function closeDonateModal() {
+      document.getElementsByClassName("mask")[0].style.display = "none";
+      document.getElementsByClassName("donate-modal")[0].style.display = "none";
+    }
+
+    var gitbook = gitbook || [];
+    gitbook.push(function () {
+      gitbook.page.hasChanged({"page":{"title":"vscode配置C++以及boost库开发环境","date":"2023-01-31T17:16:43.000Z","categories":"C++","tags":"C++","level":"1.2.10.1","depth":3,"next":{"title":"[golang]","level":"1.3","depth":1,"ref":"","articles":[{"title":"[环境搭建]","level":"1.3.1","depth":2,"ref":"","articles":[{"title":"linux环境搭建和编码","level":"1.3.1.1","depth":3,"path":"sections/go/env/golang01.md","ref":"sections/go/env/golang01.md","articles":[]},{"title":"windows环境搭建和vscode配置","level":"1.3.1.2","depth":3,"path":"sections/go/env/golang02.md","ref":"sections/go/env/golang02.md","articles":[]}]},{"title":"[基础]","level":"1.3.2","depth":2,"ref":"","articles":[{"title":"基本变量和demo","level":"1.3.2.1","depth":3,"path":"sections/go/base/golang03.md","ref":"sections/go/base/golang03.md","articles":[]},{"title":"Cobra命令行参数库的使用","level":"1.3.2.2","depth":3,"path":"sections/go/base/golang04.md","ref":"sections/go/base/golang04.md","articles":[]},{"title":"slice知识介绍和使用","level":"1.3.2.3","depth":3,"path":"sections/go/base/golang05.md","ref":"sections/go/base/golang05.md","articles":[]},{"title":"map介绍","level":"1.3.2.4","depth":3,"path":"sections/go/base/golang06.md","ref":"sections/go/base/golang06.md","articles":[]}]},{"title":"[进阶]","level":"1.3.3","depth":2,"ref":"","articles":[{"title":"实现四种排序(快速，冒泡，插入，选择)","level":"1.3.3.1","depth":3,"path":"sections/go/super/golang07.md","ref":"sections/go/super/golang07.md","articles":[]},{"title":"实现堆排序","level":"1.3.3.2","depth":3,"path":"sections/go/super/golang08.md","ref":"sections/go/super/golang08.md","articles":[]},{"title":"解密定时器的实现细节","level":"1.3.3.3","depth":3,"path":"sections/go/super/golang09.md","ref":"sections/go/super/golang09.md","articles":[]},{"title":"使用etcd","level":"1.3.3.4","depth":3,"path":"sections/go/super/golang10.md","ref":"sections/go/super/golang10.md","articles":[]},{"title":"函数介绍","level":"1.3.3.5","depth":3,"path":"sections/go/super/golang11.md","ref":"sections/go/super/golang11.md","articles":[]},{"title":"结构体struct","level":"1.3.3.6","depth":3,"path":"sections/go/super/golang12.md","ref":"sections/go/super/golang12.md","articles":[]},{"title":"接口interface","level":"1.3.3.7","depth":3,"path":"sections/go/super/golang13.md","ref":"sections/go/super/golang13.md","articles":[]},{"title":"接口内部实现","level":"1.3.3.8","depth":3,"path":"sections/go/super/golang14.md","ref":"sections/go/super/golang14.md","articles":[]},{"title":"interface应用和复习","level":"1.3.3.9","depth":3,"path":"sections/go/super/golang15.md","ref":"sections/go/super/golang15.md","articles":[]},{"title":"反射用法详解","level":"1.3.3.10","depth":3,"path":"sections/go/super/golang16.md","ref":"sections/go/super/golang16.md","articles":[]},{"title":"图解Go协程调度原理","level":"1.3.3.11","depth":3,"path":"sections/go/super/golang17.md","ref":"sections/go/super/golang17.md","articles":[]},{"title":"实现生产者消费者模型","level":"1.3.3.12","depth":3,"path":"sections/go/super/golang18.md","ref":"sections/go/super/golang18.md","articles":[]},{"title":"channel详解和协程优雅退出","level":"1.3.3.13","depth":3,"path":"sections/go/super/golang19.md","ref":"sections/go/super/golang19.md","articles":[]},{"title":"defer和panic","level":"1.3.3.14","depth":3,"path":"sections/go/super/golang42.md","ref":"sections/go/super/golang42.md","articles":[]}]},{"title":"[项目实战]","level":"1.3.4","depth":2,"ref":"","articles":[{"title":"打造高并发日志采集系统（一）","level":"1.3.4.1","depth":3,"path":"sections/go/project/golang20.md","ref":"sections/go/project/golang20.md","articles":[]},{"title":"打造高并发日志采集系统（二）","level":"1.3.4.2","depth":3,"path":"sections/go/project/golang21.md","ref":"sections/go/project/golang21.md","articles":[]},{"title":"打造高并发日志采集系统（三）","level":"1.3.4.3","depth":3,"path":"sections/go/project/golang22.md","ref":"sections/go/project/golang22.md","articles":[]},{"title":"打造高并发日志采集系统（四）","level":"1.3.4.4","depth":3,"path":"sections/go/project/golang23.md","ref":"sections/go/project/golang23.md","articles":[]},{"title":"打造高并发日志采集系统（五）","level":"1.3.4.5","depth":3,"path":"sections/go/project/golang24.md","ref":"sections/go/project/golang24.md","articles":[]},{"title":"打造高并发日志采集系统（六）","level":"1.3.4.6","depth":3,"path":"sections/go/project/golang25.md","ref":"sections/go/project/golang25.md","articles":[]},{"title":"打造高并发日志采集系统（七）","level":"1.3.4.7","depth":3,"path":"sections/go/project/golang26.md","ref":"sections/go/project/golang26.md","articles":[]},{"title":"打造高并发日志采集系统（八）","level":"1.3.4.8","depth":3,"path":"sections/go/project/golang27.md","ref":"sections/go/project/golang27.md","articles":[]},{"title":"打造高并发日志采集系统（九）","level":"1.3.4.9","depth":3,"path":"sections/go/project/golang28.md","ref":"sections/go/project/golang28.md","articles":[]},{"title":"打造高并发日志采集系统（十）","level":"1.3.4.10","depth":3,"path":"sections/go/project/golang29.md","ref":"sections/go/project/golang29.md","articles":[]},{"title":"谈谈高并发秒拍系统架构设计","level":"1.3.4.11","depth":3,"path":"sections/go/project/golang30.md","ref":"sections/go/project/golang30.md","articles":[]}]},{"title":"[存储]","level":"1.3.5","depth":2,"ref":"","articles":[{"title":"操作mongo","level":"1.3.5.1","depth":3,"path":"sections/go/db/golang34.md","ref":"sections/go/db/golang34.md","articles":[]},{"title":"使用redis","level":"1.3.5.2","depth":3,"path":"sections/go/db/golang35.md","ref":"sections/go/db/golang35.md","articles":[]}]},{"title":"[网络]","level":"1.3.6","depth":2,"ref":"","articles":[{"title":"netpoll原理(一)","level":"1.3.6.1","depth":3,"path":"sections/go/net/golang31.md","ref":"sections/go/net/golang31.md","articles":[]},{"title":"netpoll原理(二)","level":"1.3.6.2","depth":3,"path":"sections/go/net/golang32.md","ref":"sections/go/net/golang32.md","articles":[]},{"title":"化繁为简，写一个简单好用的server","level":"1.3.6.3","depth":3,"path":"sections/go/net/golang33.md","ref":"sections/go/net/golang33.md","articles":[]},{"title":"对io.readfull的理解","level":"1.3.6.4","depth":3,"path":"sections/go/net/golang36.md","ref":"sections/go/net/golang36.md","articles":[]}]},{"title":"[博客系统]","level":"1.3.7","depth":2,"ref":"","articles":[{"title":"博客系统后台开发(一)服务结构","level":"1.3.7.1","depth":3,"path":"sections/go/blog/golang37.md","ref":"sections/go/blog/golang37.md","articles":[]},{"title":"博客系统后台开发(二)添加渲染","level":"1.3.7.2","depth":3,"path":"sections/go/blog/golang38.md","ref":"sections/go/blog/golang38.md","articles":[]},{"title":"博客系统后台开发(三)完善项目并容器化","level":"1.3.7.3","depth":3,"path":"sections/go/blog/golang39.md","ref":"sections/go/blog/golang39.md","articles":[]}]},{"title":"[面试]","level":"1.3.8","depth":2,"ref":"","articles":[{"title":"面试题汇总(一)","level":"1.3.8.1","depth":3,"path":"sections/go/interview/golang40.md","ref":"sections/go/interview/golang40.md","articles":[]},{"title":"面试题汇总(二)","level":"1.3.8.2","depth":3,"path":"sections/go/interview/golang41.md","ref":"sections/go/interview/golang41.md","articles":[]}]}]},"previous":{"title":"[Boost和网络]","level":"1.2.10","depth":2,"ref":"","articles":[{"title":"vscode配置C++以及boost库开发环境","level":"1.2.10.1","depth":3,"path":"sections/cpp/boost/asio01.md","ref":"sections/cpp/boost/asio01.md","articles":[]}]},"dir":"ltr"},"config":{"plugins":["-lunr","-search","search-pro","code","theme-lou","expandable-chapters","back-to-top-button","lightbox"],"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"search-pro":{},"code":{"copyButtons":true},"theme-lou":{"hide-elements":[".summary .gitbook-link",".summary .divider"],"color":"#0ec485","book-anchor-title":"本篇章节","copyright":{"author":"王戊辰"},"forbidCopy":false,"logo":"/static/defaulthead.png","book-summary-title":"目录","search-placeholder":"输入要查询的关键字","favicon":"/static/favicon.ico","appleTouchIconPrecomposed152":"static/apple.png"},"fontsettings":{"theme":"white","family":"sans","size":2},"highlight":{},"lightbox":{"jquery":true,"sameUuid":false},"back-to-top-button":{},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false},"expandable-chapters":{}},"theme":"default","author":"恋恋风辰","lang":"zh-cn","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"isbn":"图书编号","variables":{"themeLou":{"nav":[{"target":"_blank","url":"https://llfc.club","name":"官方博客地址"},{"target":"_blank","url":"https://space.bilibili.com/271469206","name":"B站"}],"footer":{"donate":{"button":"捐赠","avatar":"/static/head.jpg","nickname":"恋恋风辰","message":"随意打赏，但不要超过一顿早餐钱！","text":"『 赠人玫瑰 🌹 手有余香 』","wxpay":"/static/wechatmoney.jpg","alipay":"/static/zfbmoney.jpg"},"copyright":true}}},"title":"恋恋风辰的编程笔记","gitbook":"*","description":"汇总编程生涯的笔记"},"file":{"path":"sections/cpp/boost/asio01.md","mtime":"2023-02-08T02:18:27.432Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2023-02-10T09:59:11.894Z"},"basePath":"../../..","book":{"language":""}});
+    });
+  </script>
+</div>
+
+        
+    <script src="../../../gitbook/gitbook.js"></script>
+    <script src="../../../gitbook/theme.js"></script>
+    
+        
+        <script src="../../../gitbook/gitbook-plugin-search-pro/jquery.mark.min.js"></script>
+        
+    
+        
+        <script src="../../../gitbook/gitbook-plugin-search-pro/search.js"></script>
+        
+    
+        
+        <script src="../../../gitbook/gitbook-plugin-code/plugin.js"></script>
+        
+    
+        
+        <script src="../../../gitbook/gitbook-plugin-expandable-chapters/expandable-chapters.js"></script>
+        
+    
+        
+        <script src="../../../gitbook/gitbook-plugin-back-to-top-button/plugin.js"></script>
+        
+    
+        
+        <script src="../../../gitbook/gitbook-plugin-lightbox/js/lightbox.min.js"></script>
+        
+    
+        
+        <script src="../../../gitbook/gitbook-plugin-sharing/buttons.js"></script>
+        
+    
+        
+        <script src="../../../gitbook/gitbook-plugin-fontsettings/fontsettings.js"></script>
+        
+    
+        
+        <script src="../../../gitbook/gitbook-plugin-theme-lou/lou.js"></script>
+        
+    
+
+    </body>
+</html>
+
