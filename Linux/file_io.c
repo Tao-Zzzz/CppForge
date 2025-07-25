@@ -75,5 +75,4 @@ void write_(int argc, char *argv[])
     }
 
     close(fd);
-    return 0;
 }
