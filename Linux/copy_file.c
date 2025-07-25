@@ -2,8 +2,10 @@
 #include <stdlib.h>
 #include <string.h>
 
+#include <errno.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <fcntl.h>
 #define N 1024
 
 int copy_by_object(void)
@@ -34,6 +36,42 @@ int copy_by_object(void)
 
     fclose(src_file);
     fclose(dest_file);
+}
+
+int copy_by_fileIO(int argc, char *argv[])
+{
+    // 源文件描述符，目的文件描述符，读取字节数
+    int fds, fdt, n;
+    char buf[N];
+    if (argc < 3)
+    {
+        printf("Usage: %s <src_file> <dst_file> \n", argv[0]);
+        return -1;
+    }
+
+    // 打开源文件
+    if ((fds = open(argv[1], O_RDONLY)) < 0)
+    {
+        fprintf(stderr, "open %s : %s \n", argv[1], strerror(errno));
+        return -1;
+    }
+
+    // 打开目的文件
+    if ((fdt = open(argv[2], O_WRONLY | O_CREAT, 0666)) < 0)
+    {
+        fprintf(stderr, "Open %s : %s \n", argv[2], strerror(errno));
+        return -1;
+    }
+
+    // 读取源文件内容
+    while ((n = read(fds, buf, N)) > 0)
+    {
+        // 向目的文件写
+        write(fdt, buf, n);
+    }
+    // 关闭描述符
+    close(fds);
+    close(fdt);
 }
 
 int main(int argc, char *argv[])
