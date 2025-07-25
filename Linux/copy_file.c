@@ -2,6 +2,40 @@
 #include <stdlib.h>
 #include <string.h>
 
+#include <stdio.h>
+#include <stdlib.h>
+#define N 1024
+
+int copy_by_object(void)
+{
+    FILE *src_file = fopen("src.mp4", "rb");
+    if (src_file == NULL)
+    {
+        perror("无法打开文件: ");
+        return -1;
+    }
+
+    FILE *dest_file = fopen("dest.mp4", "wb");
+    if (dest_file == NULL)
+    {
+        perror("无法创建写入文件: ");
+        // 关闭源文件
+        fclose(src_file);
+        return -1;
+    }
+
+    size_t element_num;
+    char buffer[N];
+    // 每次读取N字节写入目的文件
+    while ((element_num = fread(buffer, 1, N, src_file)) > 0)
+    {
+        fwrite(buffer, 1, element_num, dest_file);
+    }
+
+    fclose(src_file);
+    fclose(dest_file);
+}
+
 int main(int argc, char *argv[])
 {
     if (argc != 3)
