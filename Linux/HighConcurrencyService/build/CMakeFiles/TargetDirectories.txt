@@ -1,0 +1,3 @@
+/mnt/d/Code/Project/Cpp_/CppForge/Linux/HighConcurrencyService/build/CMakeFiles/CSProject.dir
+/mnt/d/Code/Project/Cpp_/CppForge/Linux/HighConcurrencyService/build/CMakeFiles/edit_cache.dir
+/mnt/d/Code/Project/Cpp_/CppForge/Linux/HighConcurrencyService/build/CMakeFiles/rebuild_cache.dir

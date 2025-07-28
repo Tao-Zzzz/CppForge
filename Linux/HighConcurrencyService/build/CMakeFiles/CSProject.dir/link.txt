@@ -1,0 +1,1 @@
+/usr/bin/cc CMakeFiles/CSProject.dir/main.c.o CMakeFiles/CSProject.dir/server.c.o CMakeFiles/CSProject.dir/hash_map.c.o -o CSProject 
