@@ -1,0 +1,11 @@
+/mnt/d/Code/Project/Cpp_/CppForge/Linux/calculator/build/CMakeFiles/calculator_lib.dir
+/mnt/d/Code/Project/Cpp_/CppForge/Linux/calculator/build/CMakeFiles/calculator_app.dir
+/mnt/d/Code/Project/Cpp_/CppForge/Linux/calculator/build/CMakeFiles/calculator_test.dir
+/mnt/d/Code/Project/Cpp_/CppForge/Linux/calculator/build/CMakeFiles/package.dir
+/mnt/d/Code/Project/Cpp_/CppForge/Linux/calculator/build/CMakeFiles/package_source.dir
+/mnt/d/Code/Project/Cpp_/CppForge/Linux/calculator/build/CMakeFiles/edit_cache.dir
+/mnt/d/Code/Project/Cpp_/CppForge/Linux/calculator/build/CMakeFiles/rebuild_cache.dir
+/mnt/d/Code/Project/Cpp_/CppForge/Linux/calculator/build/CMakeFiles/list_install_components.dir
+/mnt/d/Code/Project/Cpp_/CppForge/Linux/calculator/build/CMakeFiles/install.dir
+/mnt/d/Code/Project/Cpp_/CppForge/Linux/calculator/build/CMakeFiles/install/local.dir
+/mnt/d/Code/Project/Cpp_/CppForge/Linux/calculator/build/CMakeFiles/install/strip.dir
