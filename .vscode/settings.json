@@ -74,6 +74,7 @@
         "csignal": "cpp",
         "source_location": "cpp",
         "cinttypes": "cpp",
-        "typeindex": "cpp"
+        "typeindex": "cpp",
+        "fstream": "cpp"
     }
 }
