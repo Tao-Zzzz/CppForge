@@ -1,6 +1,6 @@
 #
-# 'make run dir=file_name'        build executable file 'main'
-# 'make clean dir=file_name'  	  removes selected .o and executable files
+# 'make'        build executable file 'main'
+# 'make clean'  removes all .o and executable files
 #
 
 # define the Cpp compiler to use
@@ -28,13 +28,13 @@ INCLUDE	:= include
 LIB		:= lib
 
 ifeq ($(OS),Windows_NT)
-LIBRARIES	:= -lglad -lglfw3dll
+LIBRARIES	:= -lglad -lglfw3dll -lassimp
 MAIN	:= main.exe
 SOURCEDIRS	:= $(SRC)
 INCLUDEDIRS	:= $(INCLUDE)
 LIBDIRS		:= $(LIB)
-FIXPATH = $(subst /,\,$1) #这里细节错误
-RM			:= del /q /f
+FIXPATH = $(subst /,/,$1)
+RM			:= del /q a/f
 MD	:= mkdir
 else
 LIBRARIES	:= -lglad -lglfw -ldl -lpthread
@@ -59,9 +59,6 @@ SOURCES		:= $(wildcard $(patsubst %,%/*.cpp, $(SOURCEDIRS)))
 # define the C object files 
 OBJECTS		:= $(SOURCES:.cpp=.o)
 
-# define the dependency output files
-DEPS		:= $(OBJECTS:.o=.d)
-
 #
 # The following part of the makefile is generic; it can be used to 
 # build any executable just by changing the definitions above and by
@@ -79,16 +76,12 @@ $(OUTPUT):
 $(MAIN): $(OBJECTS) 
 	$(CXX) $(CXXFLAGS) $(INCLUDES) -o $(OUTPUTMAIN) $(OBJECTS) $(LFLAGS) $(LIBS) $(LIBRARIES)
 
-# include all .d files
--include $(DEPS)
-
 # this is a suffix replacement rule for building .o's from .c's
 # it uses automatic variables $<: the name of the prerequisite of
 # the rule(a .c file) and $@: the name of the target of the rule (a .o file) 
-# -MMD generates dependency output files same name as the .o file
 # (see the gnu make manual section about automatic variables)
 .cpp.o:
-	$(CXX) $(CXXFLAGS) $(INCLUDES) -c -MMD $<  -o $@
+	$(CXX) $(CXXFLAGS) $(INCLUDES) -c $<  -o $@
 
 ifeq ($(OS),Windows_NT)
 # 转反斜杠并加引号，避免空格/路径错误
